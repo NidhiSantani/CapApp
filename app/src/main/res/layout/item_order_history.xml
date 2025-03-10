@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Top row with date/time and status -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#950606">
+
+        <!-- Order date/time -->
+        <TextView
+            android:id="@+id/tvOrderDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="February 28, 2025 | 13:26 PM"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14sp"/>
+
+        <!-- Status text (e.g., Completed) -->
+        <TextView
+            android:id="@+id/tvOrderStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="4dp"
+            android:text="Completed"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
+        <!-- Status icon -->
+        <ImageView
+            android:id="@+id/imgOrderStatus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_check_circle" />
+    </RelativeLayout>
+
+        <!-- Container for multiple items -->
+        <LinearLayout
+            android:id="@+id/llItemsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp" />
+
+        <!-- Footer with total -->
+        <TextView
+            android:id="@+id/tvItemTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Item Total: ₹0.00"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:gravity="end" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

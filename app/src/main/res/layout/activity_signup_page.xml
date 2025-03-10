@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@color/white">
+
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backbtn" />
+    <!-- Logo at the Top Center -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/AK_Logo" />
+
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-10dp"
+        android:text="Sign Up Here"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black" />
+
+    <!-- Login Subtitle -->
+    <TextView
+        android:id="@+id/loginSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcomeText"
+        android:layout_centerHorizontal="true"
+        android:text="Create your new account"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"/>
+
+
+
+    <!-- Username EditText -->
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginSubtitle"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/edittext_border"
+        android:hint="Name"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textSize="16sp" />
+    <!-- Contact EditText -->
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="326dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="25dp"
+        android:layout_below="@id/username"
+        android:layout_marginTop="20dp"
+        android:hint="Contact number"
+        android:background="@drawable/edittext_border"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:inputType="text" />
+    <!-- SAP ID EditText -->
+    <EditText
+        android:id="@+id/sapid"
+        android:layout_width="326dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="25dp"
+        android:layout_below="@id/phone"
+        android:layout_marginTop="20dp"
+        android:hint="SAP ID"
+        android:background="@drawable/edittext_border"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/termsConditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sapid"
+        android:layout_centerHorizontal="true"
+        android:text="By signing up you agree to our Terms &amp;\nConditions &amp; Privacy Policy"
+        android:textColorLink="@color/red"
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/termsConditions"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#A41012"
+        android:text="Sign up"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true" />
+    <!-- Login text -->
+    <TextView
+        android:id="@+id/signupText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signupButton"
+        android:layout_centerHorizontal="true"
+        android:text="Already have an account? Log in"
+        android:textColorLink="@color/red"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+</RelativeLayout>
