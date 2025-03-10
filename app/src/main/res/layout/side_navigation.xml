@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SideNavigation"
+    android:background="@color/white">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backbtn" />
+
+    <ImageButton
+        android:id="@+id/menuButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/menubtn"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
+        android:layout_marginStart="350dp"
+        android:contentDescription="Menu Button"
+        android:layout_alignTop="@id/backButton"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:padding="4dp"
+        android:layout_below="@+id/menuButton"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp">
+
+    <!-- Profile -->
+    <RelativeLayout
+        android:id="@+id/rl_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/profileIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/profile"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/profileText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Profile"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:layout_toEndOf="@id/profileIcon"
+            android:layout_marginStart="15dp"/>
+
+        <ImageView
+            android:id="@+id/profileArrow1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rightarrow"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/light_grey"/>
+
+        <!-- Order History -->
+        <RelativeLayout
+            android:id="@+id/rl_orderhist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/orderIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/orderhist"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/orderhistText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order History"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                android:layout_toEndOf="@id/orderIcon"
+                android:layout_marginStart="15dp"/>
+
+            <ImageView
+                android:id="@+id/profileArrow2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/rightarrow"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/light_grey"/>
+
+        <!-- Order History -->
+        <RelativeLayout
+            android:id="@+id/rl_wallethist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/walletImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/wallet"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/wallethistText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wallet History"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                android:layout_toEndOf="@id/walletImage"
+                android:layout_marginStart="15dp"/>
+
+            <ImageView
+                android:id="@+id/profileArrow3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/rightarrow"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/light_grey"/>
+
+        <!-- Order History -->
+        <RelativeLayout
+            android:id="@+id/rl_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/fbImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/fb"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/feedbackImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Feedback"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                android:layout_toEndOf="@id/fbImage"
+                android:layout_marginStart="15dp"/>
+
+            <ImageView
+                android:id="@+id/profileArrow4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/rightarrow"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Feedback">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backbtn" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Feedback"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/backButton"/>
+
+    <ImageButton
+        android:id="@+id/menuButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/menubtn"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
+        android:contentDescription="Menu Button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/backButton"
+        android:layout_marginEnd="30dp"/>
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tell us about your experience"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/title"
+        android:fontFamily="sans-serif-light"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <ImageView
+        android:id="@+id/feedbackImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/feedback"
+        android:layout_below="@id/subtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/feedbackImage"
+        android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        android:layout_centerHorizontal="true"
+        android:overScrollMode="never">
+
+        <EditText
+            android:id="@+id/feedbackInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded"
+            android:backgroundTint="@color/light_grey"
+            android:hint="Write in not more than 100 words....."
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-light"
+            android:scrollbars="vertical"/>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/wordCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scrollView"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:layout_alignEnd="@id/scrollView"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:id="@+id/submitPinButton"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Submit"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:backgroundTint="@color/dark_red"
+        android:textColor="@color/white"
+        android:layout_below="@id/wordCount"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
+
+
+
+</RelativeLayout>
