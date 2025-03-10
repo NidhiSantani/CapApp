@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Invoice">
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/backbtn"
+        android:contentDescription="Back"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_margin="30dp"
+        android:scaleType="fitCenter"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
+
+    <!-- Invoice Title -->
+    <TextView
+        android:id="@+id/tvInvoiceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invoice"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans-serif" />
+
+    <!-- Reload Button -->
+    <ImageButton
+        android:id="@+id/reloadbtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/reload_btn"
+        android:contentDescription="Reload"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/tvInvoiceTitle"/>
+
+    <!-- Order Number -->
+    <TextView
+        android:id="@+id/tvOrderNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order No. 1124"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_below="@id/tvInvoiceTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif" />
+
+    <!-- Invoice Image -->
+    <ImageView
+        android:id="@+id/imgInvoice"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/invoice_img"
+        android:layout_below="@id/tvOrderNumber"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Recycler View for items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewItems"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/imgInvoice"
+        android:layout_above="@id/bottomNavigationView"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:scrollbars="vertical"/>
+
+    <!-- Bottom Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomNavigationView"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottomnav_background"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:elevation="50dp"
+        app:menu="@menu/bottomnav_menu"
+        app:itemIconTint="@drawable/item_selector"
+        app:itemTextColor="@drawable/item_selector"
+        style="@style/NoRippleEffect"
+        android:paddingBottom="2dp"
+        android:paddingTop="12dp"
+        app:itemTextAppearanceActive="@style/BottomNavTextStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavTextStyle"
+        app:labelVisibilityMode="labeled" />
+
+</RelativeLayout>
