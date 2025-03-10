@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="NoRippleEffect" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemRippleColor">@color/transparent</item>
+    </style>
+
+    <style name="BottomNavTextStyle">
+        <item name="android:fontFamily">sans-serif</item> <!-- Change font here -->
+        <item name="android:textSize">13dp</item>
+    </style>
+
+</resources>
