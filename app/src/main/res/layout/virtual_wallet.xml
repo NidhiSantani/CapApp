@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    tools:context=".VirtualWallet"
+    android:background="@color/white">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backbtn" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Virtual Wallet"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/backButton"/>
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set up your virtual wallet to view its balance"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/title"
+        android:fontFamily="sans-serif-light"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <ImageView
+        android:id="@+id/walletImage"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/virtualwallet"
+        android:layout_below="@id/subtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <Button
+        android:id="@+id/createPinButton"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Create Pin"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:backgroundTint="@color/dark_red"
+        android:textColor="@color/white"
+        android:layout_below="@id/walletImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+</RelativeLayout>

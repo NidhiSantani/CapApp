@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    tools:context=".WalletPin"
+    android:background="@android:color/white">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backbtn" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Virtual Wallet"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/backButton"/>
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set up your virtual wallet"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/title"
+        android:fontFamily="sans-serif-light"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <ImageView
+        android:id="@+id/walletImage"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@drawable/walletdisplay"
+        android:layout_below="@id/subtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"/>
+
+    <LinearLayout
+        android:id="@+id/pinRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/walletImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/enterPinLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter new pin:"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:id="@+id/pinInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp">
+
+            <EditText
+                android:id="@+id/newPin1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:background="@drawable/rounded"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/grey"/>
+
+            <EditText
+                android:id="@+id/newPin2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/rounded"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/grey"/>
+
+            <EditText
+                android:id="@+id/newPin3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/rounded"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/grey"/>
+
+            <EditText
+                android:id="@+id/newPin4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/rounded"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/grey"/>
+
+            <ImageView
+                android:id="@+id/eyeToggleNewPin"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/eyeopen"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/confirmPinRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/pinRow"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/confirmPinLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm pin:"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:id="@+id/confirmPinLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="23dp">
+
+            <EditText
+                android:id="@+id/confirmPin1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:background="@drawable/rounded"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/grey"/>
+
+            <EditText
+                android:id="@+id/confirmPin2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/rounded"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/grey"/>
+
+            <EditText
+                android:id="@+id/confirmPin3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/rounded"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/grey"/>
+
+            <EditText
+                android:id="@+id/confirmPin4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/rounded"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/grey"/>
+
+            <ImageView
+                android:id="@+id/eyeToggleConfirmPin"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/eyeopen"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submitPinButton"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Submit"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:backgroundTint="@color/dark_red"
+        android:textColor="@color/white"
+        android:layout_below="@id/confirmPinRow"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="8dp">
+
+    <!-- CardView (Food Item) -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="12dp"
+        android:elevation="4dp"
+        app:cardBackgroundColor="@color/white">
+
+        <RelativeLayout
+            android:layout_width="160dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                app:cardBackgroundColor="@color/white">
+
+                <!-- Food Image -->
+                <ImageView
+                    android:id="@+id/foodImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/vadapav" />
+
+                <!-- Food Name -->
+                <TextView
+                    android:id="@+id/foodName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jumbo Vadapav"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-black"
+                    android:textColor="@color/black"
+                    android:paddingTop="4dp" />
+
+                <!-- Price & Heart Icon in the same row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/foodPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Rs. 30.00"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:id="@+id/heartIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/fav"
+                        android:contentDescription="Favorite"
+                        android:padding="4dp"
+                        app:tint="@color/dark_red"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_alignBaseline="@+id/foodPrice"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+    <!-- Quantity Selector -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/btn_minus1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/grey"
+            android:background="@drawable/rounded"
+            android:padding="5dp"
+            app:tint="@color/black"
+            android:contentDescription="Remove item"
+            android:src="@drawable/minus_sign"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="8dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_plus1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/dark_red"
+            android:background="@drawable/rounded"
+            android:padding="5dp"
+            app:tint="@color/white"
+            android:contentDescription="Add item"
+            android:src="@drawable/plus_sign"/>
+    </LinearLayout>
+</LinearLayout>

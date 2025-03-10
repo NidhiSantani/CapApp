@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    tools:context=".WalletDisplay"
+    android:background="@android:color/white">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backbtn" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Virtual Wallet"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/backButton"/>
+
+
+    <ImageView
+        android:id="@+id/walletImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/walletsetup"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"/>
+
+    <LinearLayout
+        android:id="@+id/balanceContainer"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/walletImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/rounded"
+        android:backgroundTint="@color/light_grey">
+
+        <TextView
+            android:id="@+id/walletBalanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wallet Balance:"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/walletBalanceAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rs. 0.00"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_red"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/resetPin"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:text="Reset pin?"
+        android:textSize="14sp"
+        android:textColor="@color/dark_red"
+        android:textAlignment="textEnd"
+        android:layout_below="@id/balanceContainer"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_alignEnd="@id/balanceContainer"
+        android:layout_alignRight="@id/balanceContainer"/>
+
+
+</RelativeLayout>

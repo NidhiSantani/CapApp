@@ -13,7 +13,37 @@
         android:theme="@style/Theme.Capstone_Kitchen"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".EmptyCart"
+            android:exported="false" />
+        <activity
+            android:name=".CartItem"
+            android:exported="false" />
+        <activity
+            android:name=".CartTest"
+            android:exported="false" />
+        <activity
+            android:name=".Cart"
+            android:exported="false" />
+        <activity
+            android:name=".SideNavigation"
+            android:exported="false" />
+        <activity
+            android:name=".FeedbackSubmit"
+            android:exported="false" />
+        <activity
+            android:name=".Feedback"
+            android:exported="false" />
+        <activity
+            android:name=".Favorites"
+            android:exported="false" />
+        <activity
+            android:name=".WalletDisplay"
+            android:exported="false" />
+        <activity
+            android:name=".WalletPin"
+            android:exported="false" />
+        <activity
+            android:name=".VirtualWallet"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
