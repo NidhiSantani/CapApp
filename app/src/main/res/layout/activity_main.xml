@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/logoImageView"
-        android:layout_width="263dp"
-        android:layout_height="318dp"
-        android:layout_centerInParent="true"
-        android:adjustViewBounds="true"
-        android:centerHorizontal="true"
-        android:contentDescription="App Logo"
-        android:paddingBottom="40dp"
-        android:src="@drawable/AK_Logo" />
-
-
-    <TextView
-        android:id="@+id/sloganTextView"
-        android:layout_width="wrap_content"
+    <!-- Bottom Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Comfort Food,\nCampus Style!"
-        android:textSize="26sp"
-        android:fontFamily="sans-serif-black"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:layout_below="@id/logoImageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-60sp"/>
+        android:id="@+id/bottomNavigationView"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottomnav_background"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:elevation="50dp"
+        app:menu="@menu/bottomnav_menu"
+        app:itemIconTint="@drawable/item_selector"
+        app:itemTextColor="@drawable/item_selector"
+        style="@style/NoRippleEffect"
+        android:paddingBottom="2dp"
+        android:paddingTop="12dp"
+        app:itemTextAppearanceActive="@style/BottomNavTextStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavTextStyle"
+        app:labelVisibilityMode="labeled" />
+    <!-- Bottom Navigation Bar Ends -->
 
 </RelativeLayout>

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Capstone_Kitchen</string>
+
+    <string name="terms_text">By placing an order you agree to our <font color='#B71C1C'>Terms &amp; Conditions</font>.</string>
+
+
 </resources>
