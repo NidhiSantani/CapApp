@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:divider="?android:attr/dividerHorizontal"
+    android:background="#F5F6FA"
+    android:layout_marginBottom="10dp"
+    android:showDividers="end">
+
+    <!-- Left side: Title and Date/Time in a vertical column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Transaction title (e.g., "Order Placed") -->
+        <TextView
+            android:id="@+id/tvTransactionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Placed"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <!-- Transaction date/time (e.g., "February 28, 2025 | 13:26 PM") -->
+        <TextView
+            android:id="@+id/tvTransactionDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="February 28, 2025 | 13:26 PM"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- Right side: Amount and arrow icon in a horizontal row -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right|center_vertical">
+
+        <!-- Amount TextView (e.g., "-Rs. 72") -->
+        <TextView
+            android:id="@+id/tvTransactionAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-Rs. 72"
+            android:textSize="16sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginRight="8dp"/>
+
+        <!-- Arrow icon (pointing up or down, or same up arrow with color) -->
+        <ImageView
+            android:id="@+id/imgTransactionArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_red_up" />
+
+    </LinearLayout>
+</LinearLayout>
