@@ -56,67 +56,194 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
 
-    <ImageView
-        android:id="@+id/feedbackImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/feedback"
-        android:layout_below="@id/subtitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"/>
-
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="300dp"
-        android:layout_height="150dp"
-        android:layout_below="@id/feedbackImage"
-        android:layout_marginTop="16dp"
-        android:fillViewport="true"
-        android:layout_centerHorizontal="true"
-        android:overScrollMode="never">
-
-        <EditText
-            android:id="@+id/feedbackInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded"
-            android:backgroundTint="@color/light_grey"
-            android:hint="Write in not more than 100 words....."
-            android:padding="12dp"
-            android:textSize="14sp"
-            android:gravity="top|start"
-            android:inputType="textMultiLine"
-            android:textColor="@color/black"
-            android:fontFamily="sans-serif-light"
-            android:scrollbars="vertical"/>
-    </ScrollView>
-
-    <TextView
-        android:id="@+id/wordCount"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/scrollView"
-        android:textSize="12sp"
-        android:textColor="@color/black"
-        android:layout_alignEnd="@id/scrollView"
-        android:fontFamily="sans-serif-light"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"/>
+        android:layout_below="@+id/subtitle" >
 
-    <Button
-        android:id="@+id/submitPinButton"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Submit"
-        android:textSize="16sp"
-        android:fontFamily="sans-serif"
-        android:backgroundTint="@color/dark_red"
-        android:textColor="@color/white"
-        android:layout_below="@id/wordCount"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"/>
+        <!-- Reduced Feedback Image Size -->
+        <ImageView
+            android:id="@+id/feedbackImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/feedback"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
 
+        <!-- Category Dropdown -->
+        <TextView
+            android:id="@+id/categoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_below="@id/feedbackImage"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="60dp"/>
 
+        <Spinner
+            android:id="@+id/categoryDropdown"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/feedbackImage"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dropdown" />
+
+        <!-- Food Item Dropdown -->
+        <TextView
+            android:id="@+id/foodTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food Item"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_below="@id/categoryDropdown"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="60dp"/>
+
+        <Spinner
+            android:id="@+id/foodDropdown"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/categoryDropdown"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dropdown" />
+
+        <!-- Reduced Height Feedback Input -->
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/foodDropdown"
+            android:layout_marginTop="16dp"
+            android:fillViewport="true"
+            android:layout_centerHorizontal="true"
+            android:overScrollMode="never">
+
+            <EditText
+                android:id="@+id/feedbackInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded"
+                android:backgroundTint="@color/light_grey"
+                android:hint="Write in not more than 100 words....."
+                android:padding="12dp"
+                android:textSize="14sp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-light"
+                android:scrollbars="vertical"/>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/wordCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scrollView"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_alignEnd="@id/scrollView"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Star Rating -->
+        <LinearLayout
+            android:id="@+id/starRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/wordCount"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/star1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/star_unfilled"
+                android:layout_marginEnd="5dp" />
+
+            <ImageView
+                android:id="@+id/star2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/star_unfilled"
+                android:layout_marginEnd="5dp" />
+
+            <ImageView
+                android:id="@+id/star3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/star_unfilled"
+                android:layout_marginEnd="5dp" />
+
+            <ImageView
+                android:id="@+id/star4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/star_unfilled"
+                android:layout_marginEnd="5dp" />
+
+            <ImageView
+                android:id="@+id/star5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/star_unfilled" />
+        </LinearLayout>
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/submitPinButton"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="Submit"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:backgroundTint="@color/dark_red"
+            android:textColor="@color/white"
+            android:layout_below="@id/starRating"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"/>
+
+    </RelativeLayout>
+
+    <!-- Bottom Navigation Bar -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:cardElevation="20dp"
+        app:cardCornerRadius="50dp"
+        app:cardBackgroundColor="@android:color/white">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottomnav_background"
+            app:menu="@menu/bottomnav_menu"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="-10dp"
+            app:itemIconTint="@drawable/item_selector"
+            app:itemTextColor="@drawable/item_selector"
+            style="@style/NoRippleEffect"
+            app:itemTextAppearanceActive="@style/BottomNavTextStyle"
+            app:itemTextAppearanceInactive="@style/BottomNavTextStyle"
+            app:labelVisibilityMode="labeled" />
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

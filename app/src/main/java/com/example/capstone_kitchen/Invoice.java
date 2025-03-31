@@ -3,6 +3,8 @@ package com.example.capstone_kitchen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -40,6 +42,15 @@ public class Invoice extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Invoice.this, HomePage.class));
+            }
+        });
+
+
         // Bottom Navigation Bar Functionality
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -49,16 +60,16 @@ public class Invoice extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.bottomnav_home) {
-                    startActivity(new Intent(Invoice.this, MainActivity.class));
+                    startActivity(new Intent(Invoice.this, HomePage.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_favorites) {
-                    startActivity(new Intent(Invoice.this, MainActivity.class));
+                    startActivity(new Intent(Invoice.this, Favorites.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_wallet) {
-                    startActivity(new Intent(Invoice.this, MainActivity.class));
+                    startActivity(new Intent(Invoice.this, VirtualWallet.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_cart) {
-                    startActivity(new Intent(Invoice.this, Payment.class));
+                    startActivity(new Intent(Invoice.this, Cart.class));
                     return true;
                 }
 

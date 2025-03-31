@@ -6,6 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
     tools:context=".Payment">
 
     <!-- Back Button -->
@@ -91,9 +93,9 @@
         <View
             android:layout_width="0dp"
             android:layout_weight="0.5"
-            android:layout_marginBottom="8dp"
             android:layout_height="3dp"
-            android:background="@color/gray"
+            android:layout_marginBottom="8dp"
+            android:background="@color/grey"
             android:layout_gravity="center_vertical"/>
 
         <!-- Step 2 -->
@@ -129,7 +131,7 @@
             android:layout_weight="0.5"
             android:layout_height="3dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/gray"
+            android:background="@color/grey"
             android:layout_gravity="center_vertical"/>
 
         <!-- Step 3 (Inactive) -->
@@ -178,6 +180,7 @@
 
     <!-- Payment Options -->
     <RelativeLayout
+        android:id="@+id/modeselect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvSelectMode"
@@ -209,7 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:buttonTint="@color/gray"/>
+                        android:buttonTint="@color/grey"/>
 
                     <ImageView
                         android:id="@+id/imgUPI"
@@ -217,7 +220,6 @@
                         android:layout_height="35dp"
                         android:src="@drawable/mode_upi"
                         android:layout_toEndOf="@id/rbUPI"
-                        android:layout_marginStart="5dp"
                         android:layout_centerVertical="true"/>
 
                     <TextView
@@ -253,7 +255,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="false"
-                        android:buttonTint="@color/gray"/>
+                        android:buttonTint="@color/grey"/>
 
                     <ImageView
                         android:id="@+id/imgWallet"
@@ -261,7 +263,6 @@
                         android:layout_height="32dp"
                         android:src="@drawable/mode_virtual_wallet"
                         android:layout_toEndOf="@id/rbWallet"
-                        android:layout_marginStart="5dp"
                         android:layout_marginTop="6dp"
                         android:layout_centerVertical="false"/>
 
@@ -287,8 +288,8 @@
                         android:textSize="13sp"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/black"
-                        android:layout_below="@id/tvWallet"
-                        android:layout_alignStart="@id/tvWallet"
+                        android:layout_below="@id/imgWallet"
+                        android:layout_alignStart="@id/imgWallet"
                         android:paddingTop="7dp"/>
 
                     <!-- PIN Boxes -->
@@ -298,14 +299,14 @@
                         android:orientation="horizontal"
                         android:layout_below="@id/tvAvailableBalance"
                         android:layout_marginTop="4dp"
-                        android:layout_alignStart="@id/tvWallet">
+                        android:layout_alignStart="@id/imgWallet" >
 
                         <!-- Enter Pin -->
                         <TextView
                             android:id="@+id/tvEnterPin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Enter Pin:"
+                            android:text="Pin:"
                             android:textSize="12sp"
                             android:fontFamily="sans-serif"
                             android:textColor="@color/black"
@@ -316,7 +317,7 @@
 
                         <EditText
                             android:id="@+id/pin1"
-                            android:layout_width="30dp"
+                            android:layout_width="28dp"
                             android:layout_height="30dp"
                             android:background="@drawable/pin_box"
                             android:inputType="number"
@@ -328,7 +329,7 @@
 
                         <EditText
                             android:id="@+id/pin2"
-                            android:layout_width="30dp"
+                            android:layout_width="28dp"
                             android:layout_height="30dp"
                             android:background="@drawable/pin_box"
                             android:inputType="number"
@@ -340,7 +341,7 @@
 
                         <EditText
                             android:id="@+id/pin3"
-                            android:layout_width="30dp"
+                            android:layout_width="28dp"
                             android:layout_height="30dp"
                             android:background="@drawable/pin_box"
                             android:inputType="number"
@@ -352,7 +353,7 @@
 
                         <EditText
                             android:id="@+id/pin4"
-                            android:layout_width="30dp"
+                            android:layout_width="28dp"
                             android:layout_height="30dp"
                             android:background="@drawable/pin_box"
                             android:inputType="number"
@@ -389,13 +390,15 @@
         android:textSize="12dp"
         android:textAlignment="center"
         android:fontFamily="sans-serif"
-        android:layout_above="@id/btnPlaceOrder"
+        android:layout_below="@+id/modeselect"
         android:layout_marginBottom="12dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        android:layout_marginTop="80dp"
         android:text="@string/terms_text"
         android:textColor="@color/black"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:ignore="NotSibling" />
 
     <!-- Place Order Button -->
     <Button
@@ -407,30 +410,53 @@
         android:layout_centerInParent="true"
         android:textColor="@color/white"
         android:backgroundTint="@color/red"
-        android:layout_above="@id/bottomNavigationView"
+        android:layout_below="@+id/tvTerms"
         android:textStyle="bold"
         android:fontFamily="sans-serif"/>
 
     <!-- Bottom Navigation Bar -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:cardElevation="20dp"
+        app:cardCornerRadius="50dp"
+        app:cardBackgroundColor="@android:color/white">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottomnav_background"
+            app:menu="@menu/bottomnav_menu"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="-10dp"
+            app:itemIconTint="@drawable/item_selector"
+            app:itemTextColor="@drawable/item_selector"
+            style="@style/NoRippleEffect"
+            app:itemTextAppearanceActive="@style/BottomNavTextStyle"
+            app:itemTextAppearanceInactive="@style/BottomNavTextStyle"
+            app:labelVisibilityMode="labeled" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottomnav_background"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="20dp"
-        android:elevation="50dp"
         app:menu="@menu/bottomnav_menu"
+        android:paddingTop="5dp"
         app:itemIconTint="@drawable/item_selector"
         app:itemTextColor="@drawable/item_selector"
         style="@style/NoRippleEffect"
-        android:paddingBottom="2dp"
-        android:paddingTop="12dp"
         app:itemTextAppearanceActive="@style/BottomNavTextStyle"
         app:itemTextAppearanceInactive="@style/BottomNavTextStyle"
-        app:labelVisibilityMode="labeled" />
+        app:labelVisibilityMode="labeled"
+        app:elevation="20dp" /> -->
 
 </RelativeLayout>

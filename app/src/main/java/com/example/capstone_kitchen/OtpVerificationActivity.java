@@ -12,11 +12,10 @@ import androidx.appcompat.widget.Toolbar;
 
 public class OtpVerificationActivity extends AppCompatActivity {
 
-    private ImageView ivBack, imgAppLogo;
+    private ImageView ivBack;
     private TextView tvResendInfo;
     private Button btnVerify;
     private EditText etOtp1, etOtp2, etOtp3, etOtp4;
-
     private CountDownTimer countDownTimer;
     private static final long OTP_TIMEOUT = 30000; // 30 seconds
 
@@ -25,18 +24,15 @@ public class OtpVerificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp_verification);
 
-        // 1. Toolbar setup
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            // We are using a custom layout, so hide the default title
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-
         // 2. Toolbar views
-        ivBack = findViewById(R.id.ivBack);
-        imgAppLogo = findViewById(R.id.imgAppLogo);
-        ivBack.setOnClickListener(v -> finish());
+        ivBack = findViewById(R.id.backButton);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OtpVerificationActivity.this, SignupPage.class);
+                startActivity(intent);
+            }
+        });
 
         // 3. OTP fields
         etOtp1 = findViewById(R.id.etOtp1);
@@ -66,7 +62,6 @@ public class OtpVerificationActivity extends AppCompatActivity {
             if (otp.length() == 4) {
                 // TODO: Verify OTP with your backend or logic
                 Toast.makeText(OtpVerificationActivity.this, "OTP Verified: " + otp, Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(OtpVerificationActivity.this, CreatePasswordActivity.class); // Change to your next screen
                 startActivity(intent);
                 finish(); // Finish OTP screen after success

@@ -3,11 +3,14 @@ package com.example.capstone_kitchen;
 import static com.example.capstone_kitchen.R.id.tvToolbarTitle;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.capstone_kitchen.WalletHistoryAdapter;
 import com.example.capstone_kitchen.WalletTransactionModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,16 +53,16 @@ public class WalletHistoryActivity extends AppCompatActivity {
         // Handle back button click
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                finish(); // close this activity
+            public void onClick(View v) {
+                startActivity(new Intent(WalletHistoryActivity.this, SideNavigation.class));
             }
         });
 
         // (Optional) Handle menu button click
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // Show a menu or open a navigation drawer
+            public void onClick(View v) {
+                startActivity(new Intent(WalletHistoryActivity.this, SideNavigation.class));
             }
         });
 
@@ -95,5 +100,33 @@ public class WalletHistoryActivity extends AppCompatActivity {
         // 5. Set up adapter
         adapter = new WalletHistoryAdapter(transactionList);
         recyclerViewWalletHistory.setAdapter(adapter);
+
+
+        // Bottom Navigation Bar Functionality
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.bottomnav_home) {
+                    startActivity(new Intent(WalletHistoryActivity.this, HomePage.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_favorites) {
+                    startActivity(new Intent(WalletHistoryActivity.this, Favorites.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_wallet) {
+                    startActivity(new Intent(WalletHistoryActivity.this, VirtualWallet.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_cart) {
+                    startActivity(new Intent(WalletHistoryActivity.this, Cart.class));
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
     }
 }

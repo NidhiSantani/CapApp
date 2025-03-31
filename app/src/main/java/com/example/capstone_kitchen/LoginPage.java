@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +34,7 @@ public class LoginPage extends AppCompatActivity {
         forgotPassword = findViewById(R.id.forgotPassword);
         signupText = findViewById(R.id.signupText);
 
-        // 👁️ Toggle password visibility
+        // Toggle password visibility
         showPasswordIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +52,7 @@ public class LoginPage extends AppCompatActivity {
             }
         });
 
-        // 🔐 Login button click listener
+        // Login button click listener
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,21 +60,21 @@ public class LoginPage extends AppCompatActivity {
                 String enteredPassword = password.getText().toString().trim();
 
                 if (enteredUsername.isEmpty() || enteredPassword.isEmpty()) {
-                    Toast.makeText(activity_login_page.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPage.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
                 } else {
                     // Redirect to HomePage
-                    Intent intent = new Intent(activity_login_page.this, HomePage.class);
+                    Intent intent = new Intent(LoginPage.this, HomePage.class);
                     startActivity(intent);
                     finish(); // Close login page
                 }
             }
         });
 
-        // 📌 Forgot password click listener
+        // Forgot password click listener
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity_login_page.this, "Forgot Password Clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginPage.this, "Forgot Password Clicked!", Toast.LENGTH_SHORT).show();
                 // Add logic to open forgot password page
             }
         });
@@ -82,7 +83,7 @@ public class LoginPage extends AppCompatActivity {
         signupText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity_login_page.this, SignupPage.class);
+                Intent intent = new Intent(LoginPage.this, SignupPage.class);
                 startActivity(intent);
             }
         });

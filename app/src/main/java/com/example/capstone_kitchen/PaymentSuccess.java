@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -53,6 +54,14 @@ public class PaymentSuccess extends AppCompatActivity {
             finish();
         }, AUTO_NAVIGATION_DELAY);
 
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PaymentSuccess.this, Cart.class));
+            }
+        });
+
         // Bottom Navigation Bar Functionality
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -62,16 +71,16 @@ public class PaymentSuccess extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.bottomnav_home) {
-                    startActivity(new Intent(PaymentSuccess.this, MainActivity.class));
+                    startActivity(new Intent(PaymentSuccess.this, HomePage.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_favorites) {
-                    startActivity(new Intent(PaymentSuccess.this, MainActivity.class));
+                    startActivity(new Intent(PaymentSuccess.this, Favorites.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_wallet) {
-                    startActivity(new Intent(PaymentSuccess.this, MainActivity.class));
+                    startActivity(new Intent(PaymentSuccess.this, VirtualWallet.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_cart) {
-                    startActivity(new Intent(PaymentSuccess.this, Payment.class));
+                    startActivity(new Intent(PaymentSuccess.this, Cart.class));
                     return true;
                 }
 

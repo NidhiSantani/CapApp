@@ -1,243 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".MenuPage">
 
-    <!-- Search Bar -->
-    <LinearLayout
+    <!-- Search Bar with Shadow Effect -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="8dp"
+        android:layout_centerHorizontal="true"
+        android:background="#FFFFFF">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/search_icon"/>
-
-        <EditText
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Search your favourite food"
-            android:textSize="16sp"
-            android:background="@android:color/transparent"
-            android:singleLine="true"/>
-    </LinearLayout>
+            android:padding="10dp">
 
-    <!-- Horizontal ScrollView for Categories -->
-    <HorizontalScrollView
+            <!-- Search Icon -->
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/search_icon"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="6dp"
+                android:layout_centerVertical="true"
+                app:tint="#000000" />
+
+            <!-- Search Text -->
+            <TextView
+                android:id="@+id/search_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search your favourite food"
+                android:textColor="#5A5A5A"
+                android:textSize="16sp"
+                android:layout_toEndOf="@id/search_icon"
+                android:layout_marginStart="10dp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Horizontal Filter RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filter_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp">
+        android:layout_below="@id/search_bar"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="12dp"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <!-- Category 1 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chaat"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:padding="10dp"/>
-
-            <!-- Category 2 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Desserts"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:padding="10dp"/>
-
-            <!-- Category 3 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Juices"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:padding="10dp"/>
-            <!-- Category 4 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Juices"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:padding="10dp"/>
-            <!-- Category 5 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Juices"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:padding="10dp"/>
-            <!-- Category 6-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Juices"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:padding="10dp"/>
-            <!-- Category 7 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Juices"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:padding="10dp"/>
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <!-- Scrollable Menu List -->
-    <ScrollView
+    <!-- Sub RelativeLayout for Food Menu -->
+    <RelativeLayout
+        android:id="@+id/food_menu_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_below="@id/filter_recycler"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp">
 
-        <LinearLayout
+        <!-- Food Menu -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/food_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:scrollbars="vertical"
+            android:paddingBottom="100dp"
+            android:nestedScrollingEnabled="false" />
 
-            <!-- Repeat this CardView for each item -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                app:cardElevation="5dp"
-                app:cardCornerRadius="10dp">
+    </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp">
+    <!-- Bottom Navigation Bar -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:cardElevation="20dp"
+        app:cardCornerRadius="50dp"
+        app:cardBackgroundColor="@android:color/white">
 
-                    <!-- Row 1: Time, Item Name, Favourite Icon -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottomnav_background"
+            app:menu="@menu/bottomnav_menu"
+            android:paddingTop="5dp"
+            app:itemIconTint="@drawable/item_selector"
+            app:itemTextColor="@drawable/item_selector"
+            style="@style/NoRippleEffect"
+            app:itemTextAppearanceActive="@style/BottomNavTextStyle"
+            app:itemTextAppearanceInactive="@style/BottomNavTextStyle"
+            app:labelVisibilityMode="labeled" />
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/time_icon"/>
+    </androidx.cardview.widget.CardView>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2 mins"
-                            android:textSize="16sp"
-                            android:layout_marginStart="5dp"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="Jumbo Vadapav"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textAlignment="center"
-                            android:layout_weight="1"/>
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/favorites_icon"/>
-                    </LinearLayout>
-
-                    <!-- Row 2: Image & Description -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"
-                        android:orientation="horizontal"
-                        android:paddingTop="5dp">
-
-                        <ImageView
-                            android:layout_width="90dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/category1"
-                            android:scaleType="centerCrop"
-                            android:layout_marginEnd="12dp"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="A relishing, mouth-watering combination of bread &amp; fried potato with sides."
-                            android:textSize="14sp"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-
-                    <!-- Row 3: Quantity Selector & Price -->
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="120dp">
-
-                        <!-- Quantity Selector below Image -->
-                        <LinearLayout
-                            android:id="@+id/quantity_selector"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_alignParentStart="true"
-                            android:gravity="center_vertical"
-                            android:layout_marginTop="5dp">
-
-                            <ImageButton
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/minus_3108"
-                                android:backgroundTint="@color/grey"
-                                android:background="@drawable/rounded"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1"
-                                android:textSize="16sp"
-                                android:layout_marginHorizontal="10dp"/>
-
-                            <ImageButton
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/rounded"
-                                android:backgroundTint="@color/red"
-                                app:tint="@color/white"
-                                android:src="@drawable/plus_3107" />
-                        </LinearLayout>
-
-                        <!-- Price aligned to the bottom right -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="₹ 50.00"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/red"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignBottom="@id/quantity_selector"/>
-                    </RelativeLayout>
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>

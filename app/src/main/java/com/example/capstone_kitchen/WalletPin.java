@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +15,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class WalletPin extends AppCompatActivity {
 
@@ -36,6 +40,42 @@ public class WalletPin extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WalletPin.this, VirtualWallet.class));
+            }
+        });
+
+        // Bottom Navigation Bar Functionality
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.bottomnav_home) {
+                    startActivity(new Intent(WalletPin.this, HomePage.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_favorites) {
+                    startActivity(new Intent(WalletPin.this, Favorites.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_wallet) {
+                    startActivity(new Intent(WalletPin.this, VirtualWallet.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_cart) {
+                    startActivity(new Intent(WalletPin.this, Cart.class));
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
 
         ImageButton backbtn = findViewById(R.id.backButton);
         backbtn.setOnClickListener(view -> {
