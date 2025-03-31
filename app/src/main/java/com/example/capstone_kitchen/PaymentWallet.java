@@ -133,6 +133,14 @@ public class PaymentWallet extends AppCompatActivity {
         });
 
 
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PaymentWallet.this, Payment.class));
+            }
+        });
+
         // Bottom Navigation Bar Functionality
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -142,16 +150,16 @@ public class PaymentWallet extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.bottomnav_home) {
-                    startActivity(new Intent(PaymentWallet.this, MainActivity.class));
+                    startActivity(new Intent(PaymentWallet.this, HomePage.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_favorites) {
-                    startActivity(new Intent(PaymentWallet.this, MainActivity.class));
+                    startActivity(new Intent(PaymentWallet.this, Favorites.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_wallet) {
-                    startActivity(new Intent(PaymentWallet.this, MainActivity.class));
+                    startActivity(new Intent(PaymentWallet.this, VirtualWallet.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_cart) {
-                    startActivity(new Intent(PaymentWallet.this, Payment.class));
+                    startActivity(new Intent(PaymentWallet.this, Cart.class));
                     return true;
                 }
 

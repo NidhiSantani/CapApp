@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutProfileRoot"
@@ -51,125 +51,168 @@
     </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
+        android:id="@+id/profileicon"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="@drawable/profile_image"
         android:padding="16dp"
+        android:layout_below="@+id/toolbar"
         android:layout_marginTop="30dp"
-        android:layout_gravity="center">
+        android:layout_centerHorizontal="true">
     </RelativeLayout>
 
-    <!-- User Info Section -->
-    <LinearLayout
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileicon" >
+
+        <!-- User Info Section -->
+        <LinearLayout
+            android:id="@+id/infosection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:divider="@drawable/divider_line"
+            android:showDividers="middle"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:padding="16dp">
+
+            <!-- Name Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/user_img" />
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Richard Jones"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!-- ID Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/sap_img" />
+
+                <TextView
+                    android:id="@+id/tvUserID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="70412110223"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!-- Phone Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/phone_img" />
+
+                <TextView
+                    android:id="@+id/tvUserPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="+91 1234567890"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Footer with Reset Password and Logout links -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_below="@+id/infosection"
+            android:padding="10dp">
+
+            <!-- "Reset Password?" link -->
+            <TextView
+                android:id="@+id/tvResetPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset Password?"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <!-- "Logout" link -->
+            <TextView
+                android:id="@+id/tvLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginLeft="120dp"/>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- Bottom Navigation Bar -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:divider="@drawable/divider_line"
-        android:showDividers="middle"
-        android:layout_margin="30dp"
-        android:padding="16dp">
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:cardElevation="20dp"
+        app:cardCornerRadius="50dp"
+        app:cardBackgroundColor="@android:color/white">
 
-        <!-- Name Row -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/user_img" />
-
-            <TextView
-                android:id="@+id/tvUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical"
-                android:text="Richard Jones"
-                android:textSize="16sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-
-        <!-- ID Row -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/sap_img" />
-
-            <TextView
-                android:id="@+id/tvUserID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical"
-                android:text="70412110223"
-                android:textSize="16sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-
-        <!-- Phone Row -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/phone_img" />
-
-            <TextView
-                android:id="@+id/tvUserPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical"
-                android:text="+91 1234567890"
-                android:textSize="16sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Footer with Reset Password and Logout links -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:padding="16dp">
-
-        <!-- "Reset Password?" link -->
-        <TextView
-            android:id="@+id/tvResetPassword"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reset Password?"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:clickable="true"
-            android:focusable="true" />
+            android:background="@drawable/bottomnav_background"
+            app:menu="@menu/bottomnav_menu"
+            android:paddingTop="5dp"
+            app:itemIconTint="@drawable/item_selector"
+            app:itemTextColor="@drawable/item_selector"
+            style="@style/NoRippleEffect"
+            app:itemTextAppearanceActive="@style/BottomNavTextStyle"
+            app:itemTextAppearanceInactive="@style/BottomNavTextStyle"
+            app:labelVisibilityMode="labeled" />
 
-        <!-- "Logout" link -->
-        <TextView
-            android:id="@+id/tvLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginLeft="120dp"/>
+    </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

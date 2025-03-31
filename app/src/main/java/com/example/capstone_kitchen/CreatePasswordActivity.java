@@ -19,7 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 public class CreatePasswordActivity extends AppCompatActivity {
 
     // Toolbar / Navigation
-    private ImageView ivBack;
+    private ImageView backButton;
 
     // New Password
     private EditText etNewPassword;
@@ -49,36 +49,34 @@ public class CreatePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_password);
 
-        // 1. Toolbar Setup
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Hide default title if you want a custom layout
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-
         // 2. Initialize Views
-        ivBack                   = findViewById(R.id.ivBack);
-        etNewPassword            = findViewById(R.id.etNewPassword);
-        ivToggleNewPassword      = findViewById(R.id.ivToggleNewPassword);
-        ivCheckNewPassword       = findViewById(R.id.ivCheckNewPassword);
+        backButton = findViewById(R.id.backButton);
+        etNewPassword  = findViewById(R.id.etNewPassword);
+        ivToggleNewPassword = findViewById(R.id.ivToggleNewPassword);
+        ivCheckNewPassword  = findViewById(R.id.ivCheckNewPassword);
 
         layoutPasswordRequirements = findViewById(R.id.layoutPasswordRequirements);
-        tvReqUpper              = findViewById(R.id.tvReqUpper);
-        tvReqLower              = findViewById(R.id.tvReqLower);
-        tvReqDigit              = findViewById(R.id.tvReqDigit);
-        tvReqSpecial            = findViewById(R.id.tvReqSpecial);
-        tvReqLength             = findViewById(R.id.tvReqLength);
+        tvReqUpper = findViewById(R.id.tvReqUpper);
+        tvReqLower = findViewById(R.id.tvReqLower);
+        tvReqDigit = findViewById(R.id.tvReqDigit);
+        tvReqSpecial = findViewById(R.id.tvReqSpecial);
+        tvReqLength = findViewById(R.id.tvReqLength);
 
-        etConfirmPassword       = findViewById(R.id.etConfirmPassword);
+        etConfirmPassword = findViewById(R.id.etConfirmPassword);
         ivToggleConfirmPassword = findViewById(R.id.ivToggleConfirmPassword);
-        ivCheckConfirmPassword  = findViewById(R.id.ivCheckConfirmPassword);
+        ivCheckConfirmPassword = findViewById(R.id.ivCheckConfirmPassword);
 
-        btnSubmit               = findViewById(R.id.btnSubmit);
+        btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setEnabled(false); // Initially disabled
 
         // 3. Back Arrow Click
-        ivBack.setOnClickListener(v -> finish());
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreatePasswordActivity.this, OtpVerificationActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 4. Toggle Visibility: New Password
         ivToggleNewPassword.setOnClickListener(v -> {
@@ -139,7 +137,7 @@ public class CreatePasswordActivity extends AppCompatActivity {
             if (isNewPasswordValid && isConfirmPasswordValid) {
                 // TODO: Perform password creation logic (e.g., server call, DB update)
                 Toast.makeText(CreatePasswordActivity.this, "Password Created Successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, ProfileActivity.class));
+                startActivity(new Intent(CreatePasswordActivity.this, LoginPage.class));
                 finish();
             }
         });

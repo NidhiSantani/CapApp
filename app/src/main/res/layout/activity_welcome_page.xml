@@ -6,15 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@android:color/white"
     android:padding="24dp">
 
     <!-- Logo ImageView -->
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/AK_Logo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/ak_logo"
         android:contentDescription="Logo"
+        android:layout_marginTop="-50dp"
         android:layout_marginBottom="24dp"/>
 
     <!-- Welcome Text -->
@@ -29,13 +31,13 @@
         android:textAlignment="center"
         android:gravity="center"
         android:padding="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginTop="-20sp"/>
 
     <!-- Login Button -->
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="250dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Login"
         android:textSize="18sp"
@@ -46,7 +48,7 @@
     <!-- Signup Button -->
     <Button
         android:id="@+id/signupButton"
-        android:layout_width="250dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:textSize="18sp"

@@ -1,131 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:padding="20dp"
-android:background="@color/white">
-
-<!-- Logo at the Top Center -->
-<ImageView
-    android:id="@+id/logo"
-    android:layout_width="170dp"
-    android:layout_height="170dp"
-    android:layout_centerHorizontal="true"
-    android:src="@drawable/AK_Logo" />
-
-<!-- Welcome Text -->
-<TextView
-    android:id="@+id/welcomeText"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/logo"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="-10dp"
-    android:text="Hi, Welcome Back!"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    android:textColor="@color/black" />
-
-<!-- Login Subtitle -->
-<TextView
-    android:id="@+id/loginSubtitle"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/welcomeText"
-    android:layout_centerHorizontal="true"
-    android:text="Login to your account"
-    android:textSize="16sp"
-    android:textColor="@color/black"
-    android:layout_marginTop="5dp"/>
-
-<!-- Clickable Signup Text -->
-<TextView
-    android:id="@+id/signupText"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/loginSubtitle"
-    android:layout_centerHorizontal="true"
-    android:text="New user? Sign up here"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginTop="20dp"
-    android:clickable="true"
-    android:focusable="true" />
-
-<!-- Username EditText -->
-<EditText
-    android:id="@+id/username"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_below="@id/signupText"
-    android:layout_marginTop="20dp"
-    android:hint="Username"
-    android:background="@drawable/edittext_border"
-    android:padding="12dp"
-    android:textSize="16sp"
-    android:inputType="text" />
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:gravity="center_vertical"
+    android:background="@color/white">
 
-<!-- Password EditText with Eye Icon -->
-<RelativeLayout
-    android:id="@+id/passwordContainer"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_below="@id/username"
-    android:layout_marginTop="12dp"
-    android:background="@drawable/edittext_border">
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="Password"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:inputType="textPassword"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/showPasswordIcon"
-        android:background="@null"
-        android:layout_toStartOf="@id/showPasswordIcon" />
-
+    <!-- Logo at the Top Center -->
     <ImageView
-        android:id="@+id/showPasswordIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="12dp"
-        android:src="@drawable/pswd_eye"
+        android:id="@+id/logo"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-60dp"
+        android:src="@drawable/ak_logo" />
+
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-10dp"
+        android:text="Hi, Welcome Back!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black" />
+
+    <!-- Login Subtitle -->
+    <TextView
+        android:id="@+id/loginSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcomeText"
+        android:layout_centerHorizontal="true"
+        android:text="Login to your account"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"/>
+
+    <!-- Clickable Signup Text -->
+    <TextView
+        android:id="@+id/signupText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginSubtitle"
+        android:layout_centerHorizontal="true"
+        android:text="New user? Sign up here"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         android:focusable="true" />
-</RelativeLayout>
 
-<!-- Forgot Password Text -->
-<TextView
-    android:id="@+id/forgotPassword"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/passwordContainer"
-    android:layout_alignParentRight="true"
-    android:text="Forgot password?"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:layout_marginTop="8dp"
-    android:clickable="true"
-    android:focusable="true" />
+    <!-- Username EditText -->
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/signupText"
+        android:layout_marginTop="20dp"
+        android:hint="Username"
+        android:background="@drawable/edittext_border"
+        android:textSize="16sp"
+        android:paddingLeft="20dp"
+        android:layout_centerHorizontal="true"
+        android:inputType="text" />
 
-<!-- Login Button -->
-<Button
-    android:id="@+id/loginButton"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_below="@id/forgotPassword"
-    android:layout_marginTop="50dp"
-    android:backgroundTint="#A41012"
-    android:text="Login"
-    android:textSize="18sp"
-    android:textColor="@color/white"
-    android:textStyle="bold"
-    android:layout_centerHorizontal="true" />
+    <!-- Password EditText with Eye Icon -->
+    <RelativeLayout
+        android:id="@+id/passwordContainer"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/username"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/edittext_border">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Password"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/showPasswordIcon"
+            android:background="@null"
+            android:layout_toStartOf="@id/showPasswordIcon" />
+
+        <ImageView
+            android:id="@+id/showPasswordIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/pswd_eye"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </RelativeLayout>
+
+    <!-- Forgot Password Text -->
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordContainer"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
+        android:text="Forgot password?"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@id/forgotPassword"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#A41012"
+        android:text="Login"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

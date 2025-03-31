@@ -8,48 +8,53 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- Custom Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/white"
-        android:elevation="4dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp">
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/backbtn"
+        android:contentDescription="Back"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_margin="30dp"
+        android:scaleType="fitCenter"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
 
-        <!-- Left: Back Arrow -->
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="start|center_vertical"
-            android:padding="8dp"
-            android:src="@drawable/backbtn" />
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <!-- Center: App Logo (e.g., Aman’s Kitchen) -->
     <ImageView
         android:id="@+id/imgAppLogo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
+        android:layout_marginTop="-50dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/logo_img" />
+        android:src="@drawable/ak_logo" />
 
     <!-- Main content container -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:padding="5dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
             android:paddingBottom="24dp">
+
+            <!-- "Enter OTP" Title -->
+            <TextView
+                android:id="@+id/tvOTPverification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OTP Verification"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="10dp" />
 
             <!-- OTP Illustration -->
             <ImageView
@@ -66,10 +71,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enter OTP"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="10dp" />
 
             <!-- Subtitle explaining the code was sent -->
             <TextView
@@ -146,12 +151,12 @@
                 android:textSize="14sp"
                 android:textColor="@android:color/holo_red_dark"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="15dp" />
 
             <!-- Verify button -->
             <Button
                 android:id="@+id/btnVerify"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Verify"
                 android:textAllCaps="false"

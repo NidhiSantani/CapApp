@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -74,6 +75,14 @@ public class Payment extends AppCompatActivity {
             }
         });
 
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Payment.this, Cart.class));
+            }
+        });
+
 
         // Bottom Navigation Bar Functionality
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -84,16 +93,16 @@ public class Payment extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.bottomnav_home) {
-                    startActivity(new Intent(Payment.this, MainActivity.class));
+                    startActivity(new Intent(Payment.this, HomePage.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_favorites) {
-                    startActivity(new Intent(Payment.this, MainActivity.class));
+                    startActivity(new Intent(Payment.this, Favorites.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_wallet) {
-                    startActivity(new Intent(Payment.this, MainActivity.class));
+                    startActivity(new Intent(Payment.this, VirtualWallet.class));
                     return true;
                 } else if (itemId == R.id.bottomnav_cart) {
-                    startActivity(new Intent(Payment.this, Payment.class));
+                    startActivity(new Intent(Payment.this, Cart.class));
                     return true;
                 }
 

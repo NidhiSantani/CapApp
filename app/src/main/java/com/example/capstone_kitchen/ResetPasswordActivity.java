@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
@@ -72,9 +77,17 @@ public class ResetPasswordActivity extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btnSubmit);
 
         // 7. Handle toolbar icons
-        ivBack.setOnClickListener(v -> finish());
-        ivMenu.setOnClickListener(v -> {
-            // Open a menu or navigation drawer if needed
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ResetPasswordActivity.this, ProfileActivity.class));
+            }
+        });
+        ivMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ResetPasswordActivity.this, SideNavigation.class));
+            }
         });
 
         // 8. Toggle visibility for New Password
@@ -143,6 +156,33 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Bottom Navigation Bar Functionality
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.bottomnav_home) {
+                    startActivity(new Intent(ResetPasswordActivity.this, HomePage.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_favorites) {
+                    startActivity(new Intent(ResetPasswordActivity.this, Favorites.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_wallet) {
+                    startActivity(new Intent(ResetPasswordActivity.this, VirtualWallet.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_cart) {
+                    startActivity(new Intent(ResetPasswordActivity.this, Cart.class));
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
     }
 
     /**

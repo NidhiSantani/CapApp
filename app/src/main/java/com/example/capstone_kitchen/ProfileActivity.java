@@ -2,11 +2,16 @@ package com.example.capstone_kitchen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -42,10 +47,18 @@ public class ProfileActivity extends AppCompatActivity {
         tvLogout        = findViewById(R.id.tvLogout);
 
         // 5. Set up click listeners
-        ivBack.setOnClickListener(view -> finish());  // Go back to previous activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, HomePage.class));
+            }
+        });  // Go back to previous activity
 
-        ivMenu.setOnClickListener(view -> {
-            // Open menu or navigation drawer, if needed
+        ivMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, SideNavigation.class));
+            }
         });
 
         tvResetPassword.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle "Logout" click
-                // E.g., clear session and go back to login screen
+                startActivity(new Intent(ProfileActivity.this, Logout.class));
             }
         });
 
@@ -69,5 +81,33 @@ public class ProfileActivity extends AppCompatActivity {
         tvUserName.setText("Richard Jones");
         tvUserID.setText("70412110223");
         tvUserPhone.setText("+91 1234567890");
+
+
+        // Bottom Navigation Bar Functionality
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.bottomnav_home) {
+                    startActivity(new Intent(ProfileActivity.this, HomePage.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_favorites) {
+                    startActivity(new Intent(ProfileActivity.this, Favorites.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_wallet) {
+                    startActivity(new Intent(ProfileActivity.this, VirtualWallet.class));
+                    return true;
+                } else if (itemId == R.id.bottomnav_cart) {
+                    startActivity(new Intent(ProfileActivity.this, Cart.class));
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
     }
 }
