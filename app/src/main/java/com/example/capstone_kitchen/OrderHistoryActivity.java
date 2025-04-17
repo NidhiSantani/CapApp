@@ -2,9 +2,10 @@ package com.example.capstone_kitchen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,93 +14,137 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderHistoryActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewOrderHistory;
     private ImageView ivBack, ivMenu;
     private OrderHistoryAdapter adapter;
-    private List<OrderHistoryModel> orderList;
+    private final List<OrderHistoryModel> orderList = new ArrayList<>();
+    private FirebaseFirestore db;
+    private String sapid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
-        // Set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Hide the default title if you're using a custom TextView
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
         ivBack = findViewById(R.id.ivBack);
         ivMenu = findViewById(R.id.ivMenu);
-
-        // Initialize RecyclerView
         recyclerViewOrderHistory = findViewById(R.id.recyclerViewOrderHistory);
         recyclerViewOrderHistory.setLayoutManager(new LinearLayoutManager(this));
 
-        List<OrderHistoryModel> orders = new ArrayList<>();
-
-        // Single order with multiple items
-        List<OrderItemModel> itemsDay1 = new ArrayList<>();
-        itemsDay1.add(new OrderItemModel("Vadapav", 1, 50.00));
-        itemsDay1.add(new OrderItemModel("Maggi", 2, 70.00));
-        orders.add(new OrderHistoryModel("February 21, 2025", "04:00 AM", "Completed", itemsDay1));
-
-        // Another order
-        List<OrderItemModel> itemsDay2 = new ArrayList<>();
-        itemsDay2.add(new OrderItemModel("Vadapav", 1, 50.00));
-        orders.add(new OrderHistoryModel("February 28, 2025", "13:26 PM", "Cancelled", itemsDay2));
-
-        // Set up RecyclerView
-        OrderHistoryAdapter adapter = new OrderHistoryAdapter(orders);
+        adapter = new OrderHistoryAdapter(orderList);
         recyclerViewOrderHistory.setAdapter(adapter);
 
-        ivBack.setOnClickListener(view -> {
-            startActivity(new Intent(OrderHistoryActivity.this, HomePage.class));
-        });
+        sapid = getIntent().getStringExtra("sapid");
+        db = FirebaseFirestore.getInstance();
 
-        ivMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(OrderHistoryActivity.this, SideNavigation.class));
-            }
-        });
+        fetchOrders();
 
+        ivBack.setOnClickListener(v -> startActivity(new Intent(OrderHistoryActivity.this, HomePage.class)));
+        ivMenu.setOnClickListener(v -> startActivity(new Intent(OrderHistoryActivity.this, SideNavigation.class)));
 
-        // Bottom Navigation Bar Functionality
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-
-                if (itemId == R.id.bottomnav_home) {
-                    startActivity(new Intent(OrderHistoryActivity.this, HomePage.class));
-                    return true;
-                } else if (itemId == R.id.bottomnav_favorites) {
-                    startActivity(new Intent(OrderHistoryActivity.this, Favorites.class));
-                    return true;
-                } else if (itemId == R.id.bottomnav_wallet) {
-                    startActivity(new Intent(OrderHistoryActivity.this, VirtualWallet.class));
-                    return true;
-                } else if (itemId == R.id.bottomnav_cart) {
-                    startActivity(new Intent(OrderHistoryActivity.this, Cart.class));
-                    return true;
-                }
-
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.bottomnav_home) {
+                startActivity(new Intent(this, HomePage.class));
+                return true;
+            } else if (itemId == R.id.bottomnav_favorites) {
+                startActivity(new Intent(this, Favorites.class));
+                return true;
+            } else if (itemId == R.id.bottomnav_wallet) {
+                startActivity(new Intent(this, VirtualWallet.class));
+                return true;
+            } else if (itemId == R.id.bottomnav_cart) {
+                startActivity(new Intent(this, Cart.class));
+                return true;
             }
+            return false;
         });
+    }
 
+    private void fetchOrders() {
+        db.collection("order")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        Log.w("OrderHistory", "No orders found for sapid: " + sapid);
+                        return;
+                    }
 
+                    for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                        if (doc.contains("sapid") && sapid.equals(doc.getString("sapid"))) {
+                            Timestamp timestamp = doc.getTimestamp("order_date");
+                            String formattedDate = formatDate(timestamp);
+                            Log.d("OrderHistory", "Formatted Order Date: " + formattedDate);
+
+                            String status = doc.getString("status");
+                            List<String> foodIds = (List<String>) doc.get("food_id");
+                            List<Long> quantities = (List<Long>) doc.get("quantity");
+
+                            List<?> rawRates = (List<?>) doc.get("rate");
+                            List<Double> rates = new ArrayList<>();
+                            if (rawRates != null) {
+                                for (Object obj : rawRates) {
+                                    if (obj instanceof Number) {
+                                        rates.add(((Number) obj).doubleValue());
+                                    } else {
+                                        rates.add(0.0);
+                                    }
+                                }
+                            }
+
+                            if (foodIds == null || foodIds.isEmpty()) continue;
+
+                            List<OrderItemModel> items = new ArrayList<>();
+                            final int[] remainingItems = {foodIds.size()};
+
+                            for (int i = 0; i < foodIds.size(); i++) {
+                                String foodId = foodIds.get(i);
+                                int quantity = (quantities != null && i < quantities.size()) ? quantities.get(i).intValue() : 0;
+                                double rate = (rates != null && i < rates.size()) ? rates.get(i) : 0.0;
+
+                                db.collection("food_item").document(foodId).get().addOnSuccessListener(foodDoc -> {
+                                    String foodName = foodDoc.getString("name");
+                                    items.add(new OrderItemModel(foodName, quantity, rate, foodId));
+
+                                    remainingItems[0]--;
+                                    if (remainingItems[0] == 0) {
+                                        orderList.add(new OrderHistoryModel(formattedDate, status, items));
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error fetching orders", Toast.LENGTH_SHORT).show();
+                    Log.e("OrderHistory", "Error fetching", e);
+                });
+    }
+
+    private String formatDate(Timestamp timestamp) {
+        if (timestamp == null) return "";
+        Date date = timestamp.toDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault());
+        return sdf.format(date).toUpperCase();  // force AM/PM to uppercase
     }
 }

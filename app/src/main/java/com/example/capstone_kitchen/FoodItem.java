@@ -1,14 +1,20 @@
 package com.example.capstone_kitchen;
 
 public class FoodItem {
+    private String id;
     private String name;
     private String price;
-    private int imageResId;
+    private String imageUrl;
 
-    public FoodItem(String name, String price, int imageResId) {
+    public FoodItem(String id, String name, String price, String imageUrl) {
+        this.id = id;
         this.name = name;
         this.price = price;
-        this.imageResId = imageResId;
+        this.imageUrl = imageUrl;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -19,7 +25,7 @@ public class FoodItem {
         return price;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

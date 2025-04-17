@@ -22,6 +22,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WalletPin extends AppCompatActivity {
 
@@ -41,6 +45,7 @@ public class WalletPin extends AppCompatActivity {
             return insets;
         });
 
+        String sapid = getIntent().getStringExtra("sapid");
 
         ImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -126,8 +131,22 @@ public class WalletPin extends AppCompatActivity {
             } else if (!newPinText.equals(confirmPinText)) {
                 Toast.makeText(WalletPin.this, "Pins do not match! Please try again", Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(WalletPin.this, WalletDisplay.class);
-                startActivity(intent);
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                Map<String, Object> updateData = new HashMap<>();
+                updateData.put("wallet_pin", Long.parseLong(newPinText)); // store as number
+
+                db.collection("user").document(sapid).update(updateData)
+                        .addOnSuccessListener(unused -> {
+                            Toast.makeText(WalletPin.this, "PIN created successfully!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(WalletPin.this, WalletDisplay.class);
+                            intent.putExtra("sapid", sapid);
+                            startActivity(intent);
+                            finish(); // optional: close current screen
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(WalletPin.this, "Failed to save PIN: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
             }
         });
     }

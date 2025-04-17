@@ -16,6 +16,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.FirebaseApp;
+
 public class CreatePasswordActivity extends AppCompatActivity {
 
     // Toolbar / Navigation
@@ -49,6 +53,9 @@ public class CreatePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_password);
 
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this);
+
         // 2. Initialize Views
         backButton = findViewById(R.id.backButton);
         etNewPassword  = findViewById(R.id.etNewPassword);
@@ -70,12 +77,9 @@ public class CreatePasswordActivity extends AppCompatActivity {
         btnSubmit.setEnabled(false); // Initially disabled
 
         // 3. Back Arrow Click
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CreatePasswordActivity.this, OtpVerificationActivity.class);
-                startActivity(intent);
-            }
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CreatePasswordActivity.this, OtpVerificationActivity.class);
+            startActivity(intent);
         });
 
         // 4. Toggle Visibility: New Password
@@ -135,10 +139,23 @@ public class CreatePasswordActivity extends AppCompatActivity {
         // 8. Submit Button Click
         btnSubmit.setOnClickListener(v -> {
             if (isNewPasswordValid && isConfirmPasswordValid) {
-                // TODO: Perform password creation logic (e.g., server call, DB update)
-                Toast.makeText(CreatePasswordActivity.this, "Password Created Successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CreatePasswordActivity.this, LoginPage.class));
-                finish();
+                // Get the SAPID (Assume it's passed through Intent or available globally)
+                String sapid = getIntent().getStringExtra("sapid");
+                String password = etNewPassword.getText().toString();
+
+                // Save the password to Firebase Firestore
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("user")
+                        .document(sapid)
+                        .update("password", password)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(CreatePasswordActivity.this, "Password Created Successfully!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(CreatePasswordActivity.this, LoginPage.class));
+                            finish();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(CreatePasswordActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
             }
         });
     }

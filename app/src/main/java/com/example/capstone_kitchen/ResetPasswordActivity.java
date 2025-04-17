@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +43,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
+
+        String sapid = getIntent().getStringExtra("sapid");
 
         // 1. Toolbar setup
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -149,11 +153,20 @@ public class ResetPasswordActivity extends AppCompatActivity {
         // 11. Handle Submit button click
         btnSubmit.setOnClickListener(v -> {
             if (isNewPasswordValid && isConfirmPasswordValid) {
-                // Perform password reset logic here
-                // e.g., update on server, show success message, etc.
-                Toast.makeText(ResetPasswordActivity.this, "Password reset successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, OrderHistoryActivity.class));
-                finish();
+                String newPassword = etNewPassword.getText().toString();
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference userRef = db.collection("user").document(sapid);
+
+                userRef.update("password", newPassword)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(ResetPasswordActivity.this, "Password reset successfully!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(ResetPasswordActivity.this, OrderHistoryActivity.class));
+                            finish();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(ResetPasswordActivity.this, "Failed to update password: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
             }
         });
 

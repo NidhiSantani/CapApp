@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
+
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Feedback extends AppCompatActivity {
 
@@ -33,6 +44,9 @@ public class Feedback extends AppCompatActivity {
     private ImageView[] stars = new ImageView[5];
     private int rating = 0;
     private static final int MAX_WORD_LIMIT = 100;
+    private String selectedCuisineId = "";
+    private String selectedFoodId = "";
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +60,42 @@ public class Feedback extends AppCompatActivity {
             return insets;
         });
 
-        // Bottom Navigation Bar Functionality
+        String sapid = getIntent().getStringExtra("sapid");
+        db = FirebaseFirestore.getInstance();
+
+        // Bottom Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
-
             if (itemId == R.id.bottomnav_home) {
-                startActivity(new Intent(Feedback.this, HomePage.class));
+                startActivity(new Intent(Feedback.this, HomePage.class).putExtra("sapid", sapid));
                 return true;
             } else if (itemId == R.id.bottomnav_favorites) {
                 startActivity(new Intent(Feedback.this, Favorites.class));
                 return true;
             } else if (itemId == R.id.bottomnav_wallet) {
-                startActivity(new Intent(Feedback.this, VirtualWallet.class));
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("user").document(sapid).get()
+                        .addOnSuccessListener(documentSnapshot -> {
+                            if (documentSnapshot.exists()) {
+                                Long walletPin = documentSnapshot.getLong("wallet_pin");
+                                Intent intent1;
+                                if (walletPin == null || walletPin == 0) {
+                                    // No PIN set
+                                    intent1 = new Intent(this, VirtualWallet.class);
+                                } else {
+                                    // PIN already set
+                                    intent1 = new Intent(this, WalletDisplay.class);
+                                }
+                                intent1.putExtra("sapid", sapid);
+                                startActivity(intent1);
+                            } else {
+                                Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Failed to access wallet: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
                 return true;
             } else if (itemId == R.id.bottomnav_cart) {
                 startActivity(new Intent(Feedback.this, Cart.class));
@@ -76,44 +113,66 @@ public class Feedback extends AppCompatActivity {
         feedbackInput = findViewById(R.id.feedbackInput);
         wordCount = findViewById(R.id.wordCount);
         submitButton = findViewById(R.id.submitPinButton);
-
-        // Disable submit button initially
         submitButton.setEnabled(false);
         submitButton.setAlpha(0.5f);
 
-        // Feedback word count logic
         feedbackInput.addTextChangedListener(new TextWatcher() {
-            @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 updateWordCount(s.toString());
             }
-
-            @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        submitButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Feedback submitted!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Feedback.this, FeedbackSubmit.class));
-        });
-
-        // Dropdown Setup
         categoryDropdown = findViewById(R.id.categoryDropdown);
         foodDropdown = findViewById(R.id.foodDropdown);
-
         setupDropdowns();
 
-        // Star Rating Setup
         setupStarRating();
+
+        submitButton.setOnClickListener(v -> {
+            String selectedCuisine = categoryDropdown.getSelectedItem().toString();
+            String selectedFood = foodDropdown.getSelectedItem().toString();
+            String comment = feedbackInput.getText().toString().trim();
+
+            if (selectedCuisine.equals("Select Cuisine")) {
+                Toast.makeText(this, "Please select a cuisine category", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (selectedFood.equals("Select Food Item") || selectedFoodId.isEmpty()) {
+                Toast.makeText(this, "Please select a food item", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (comment.isEmpty()) {
+                Toast.makeText(this, "Please enter your feedback", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (rating == 0) {
+                Toast.makeText(this, "Please give a star rating", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Submit feedback to Firestore
+            Map<String, Object> review = new HashMap<>();
+            review.put("comment", comment);
+            review.put("rating", rating);
+            review.put("created_at", Timestamp.now());
+            review.put("user_id", db.document("user/" + sapid));
+            review.put("food_id", db.document("food_item/" + selectedFoodId));
+
+            db.collection("review")
+                    .add(review)
+                    .addOnSuccessListener(documentReference -> {
+                        Toast.makeText(this, "Feedback submitted!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Feedback.this, FeedbackSubmit.class).putExtra("sapid", sapid));
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to submit feedback.", Toast.LENGTH_SHORT).show());
+        });
     }
 
     private void updateWordCount(String text) {
         String[] words = text.trim().split("\\s+");
         int wordCountValue = text.trim().isEmpty() ? 0 : words.length;
-
         wordCount.setText(wordCountValue + "/100 words");
 
         if (wordCountValue > MAX_WORD_LIMIT) {
@@ -122,21 +181,91 @@ public class Feedback extends AppCompatActivity {
             feedbackInput.setSelection(feedbackInput.getText().length());
         }
 
-        // Enable/disable submit button based on input
         boolean hasText = wordCountValue > 0;
         submitButton.setEnabled(hasText);
         submitButton.setAlpha(hasText ? 1.0f : 0.5f);
     }
 
     private void setupDropdowns() {
-        String[] categories = {"Select Category", "Snacks", "Beverages", "Meals"};
-        String[] foodItems = {"Select Food Item", "Burger", "Pizza", "Pasta", "Coffee"};
+        db.collection("cuisine")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> cuisineList = new ArrayList<>();
+                        cuisineList.add("Select Cuisine");
+                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                            String cuisineName = doc.getString("cuisine_name");
+                            if (cuisineName != null) cuisineList.add(cuisineName);
+                        }
+                        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, cuisineList);
+                        categoryDropdown.setAdapter(categoryAdapter);
 
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories);
-        ArrayAdapter<String> foodAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, foodItems);
+                        categoryDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String selectedCuisine = categoryDropdown.getSelectedItem().toString();
+                                if (!selectedCuisine.equals("Select Cuisine")) {
+                                    fetchCuisineIdAndUpdateFoodDropdown(selectedCuisine);
+                                } else {
+                                    List<String> emptyFoodList = new ArrayList<>();
+                                    emptyFoodList.add("Select Food Item");
+                                    ArrayAdapter<String> foodAdapter = new ArrayAdapter<>(Feedback.this, android.R.layout.simple_spinner_dropdown_item, emptyFoodList);
+                                    foodDropdown.setAdapter(foodAdapter);
+                                }
+                            }
+                            public void onNothingSelected(AdapterView<?> parent) {}
+                        });
+                    } else {
+                        Toast.makeText(this, "Error getting cuisines", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
-        categoryDropdown.setAdapter(categoryAdapter);
-        foodDropdown.setAdapter(foodAdapter);
+    private void fetchCuisineIdAndUpdateFoodDropdown(String selectedCuisine) {
+        db.collection("cuisine")
+                .whereEqualTo("cuisine_name", selectedCuisine)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
+                        DocumentSnapshot cuisineDoc = task.getResult().getDocuments().get(0);
+                        selectedCuisineId = cuisineDoc.getId();
+                        updateFoodDropdown();
+                    } else {
+                        Toast.makeText(this, "Cuisine not found", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void updateFoodDropdown() {
+        if (selectedCuisineId.isEmpty()) return;
+        db.collection("food_item")
+                .whereEqualTo("cuisine_id", db.document("cuisine/" + selectedCuisineId))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> foodList = new ArrayList<>();
+                        foodList.add("Select Food Item");
+                        Map<String, String> foodNameToIdMap = new HashMap<>();
+                        for (QueryDocumentSnapshot foodDoc : task.getResult()) {
+                            String foodName = foodDoc.getString("food_name");
+                            if (foodName != null) {
+                                foodList.add(foodName);
+                                foodNameToIdMap.put(foodName, foodDoc.getId());
+                            }
+                        }
+                        ArrayAdapter<String> foodAdapter = new ArrayAdapter<>(Feedback.this, android.R.layout.simple_spinner_dropdown_item, foodList);
+                        foodDropdown.setAdapter(foodAdapter);
+
+                        foodDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String selectedFood = foodDropdown.getSelectedItem().toString();
+                                selectedFoodId = foodNameToIdMap.getOrDefault(selectedFood, "");
+                            }
+                            public void onNothingSelected(AdapterView<?> parent) {}
+                        });
+                    } else {
+                        Toast.makeText(this, "Error getting food items", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void setupStarRating() {
@@ -154,13 +283,8 @@ public class Feedback extends AppCompatActivity {
 
     private void setRating(int newRating) {
         rating = newRating;
-
         for (int i = 0; i < stars.length; i++) {
-            if (i < rating) {
-                stars[i].setImageResource(R.drawable.star_filled);
-            } else {
-                stars[i].setImageResource(R.drawable.star_unfilled);
-            }
+            stars[i].setImageResource(i < rating ? R.drawable.star_filled : R.drawable.star_unfilled);
         }
     }
 }

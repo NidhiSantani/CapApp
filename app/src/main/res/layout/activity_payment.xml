@@ -35,25 +35,48 @@
         android:layout_marginTop="30dp"
         android:fontFamily="sans-serif" />
 
-    <!-- Payment Details -->
-    <TextView
-        android:id="@+id/tvPaymentDetails"
+    <LinearLayout
+        android:id="@+id/paymentinfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2 items | Total Payment: Rs. 90"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:fontFamily="sans-serif"
-        android:layout_below="@id/tvPaymentTitle"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"/>
+        android:layout_below="@+id/tvPaymentTitle">
+
+        <!-- Payment Details -->
+        <TextView
+            android:id="@+id/tvPaymentDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Payment: "
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif"
+            android:layout_below="@id/tvPaymentTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvPaymentamt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:layout_below="@id/tvPaymentTitle"
+            android:layout_toEndOf="@id/tvPaymentDetails"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"/>
+
+    </LinearLayout>
 
     <!-- Step Progress Layout -->
     <LinearLayout
         android:id="@+id/stepProgressLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvPaymentDetails"
+        android:layout_below="@id/paymentinfo"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -336,7 +359,6 @@
             android:background="@drawable/bottomnav_background"
             app:menu="@menu/bottomnav_menu"
             android:paddingTop="5dp"
-            android:layout_marginBottom="-10dp"
             app:itemIconTint="@drawable/item_selector"
             app:itemTextColor="@drawable/item_selector"
             style="@style/NoRippleEffect"

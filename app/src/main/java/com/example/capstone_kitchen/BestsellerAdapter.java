@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import android.util.Log;
 
 public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.BestsellerViewHolder> {
 
@@ -33,6 +34,14 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.Be
         Bestseller bestseller = bestsellerList.get(position);
         holder.bestsellerName.setText(bestseller.getName());
         holder.bestsellerImage.setImageResource(bestseller.getImageResId());
+        Log.d("BestsellerAdapter", "Name: " + bestseller.getName() + ", Image: " + bestseller.getImageResId());
+
+
+        // Handle image loading dynamically from resource name
+        int imageResId = bestseller.getImageResId();
+        if (imageResId != 0) {
+            holder.bestsellerImage.setImageResource(R.drawable.foodph);
+        }
     }
 
     @Override

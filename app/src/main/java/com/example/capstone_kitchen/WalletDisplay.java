@@ -6,6 +6,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -28,6 +30,36 @@ public class WalletDisplay extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        String sapid = getIntent().getStringExtra("sapid");
+
+
+
+        TextView walletBalanceTextView = findViewById(R.id.walletBalanceAmount);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if (sapid != null && !sapid.isEmpty()) {
+            db.collection("user").document(sapid).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            // Fetch wallet_balance
+                            Long balance = documentSnapshot.getLong("wallet_balance");
+                            if (balance != null) {
+                                walletBalanceTextView.setText("₹" + balance);
+                            } else {
+                                walletBalanceTextView.setText("₹0");
+                            }
+                        } else {
+                            walletBalanceTextView.setText("₹0");
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        walletBalanceTextView.setText("Error");
+                    });
+        } else {
+            walletBalanceTextView.setText("User not found");
+        }
+
 
         ImageButton backbtn = findViewById(R.id.backButton);
         backbtn.setOnClickListener(view -> {

@@ -3,47 +3,94 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="16dp"
     android:divider="?android:attr/dividerHorizontal"
     android:background="#F5F6FA"
     android:layout_marginBottom="10dp"
     android:showDividers="end">
 
-    <!-- Left side: Title and Date/Time in a vertical column -->
+    <!-- Transaction Info Section (Order ID, Mode, Date, Payment Status) -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
 
-        <!-- Transaction title (e.g., "Order Placed") -->
-        <TextView
-            android:id="@+id/tvTransactionTitle"
-            android:layout_width="wrap_content"
+        <!-- Order ID -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Order Placed"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order ID:"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginEnd="8dp" />
+            <TextView
+                android:id="@+id/tvOrderId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12345"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
 
-        <!-- Transaction date/time (e.g., "February 28, 2025 | 13:26 PM") -->
-        <TextView
-            android:id="@+id/tvTransactionDate"
-            android:layout_width="wrap_content"
+        <!-- Payment Mode -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="February 28, 2025 | 13:26 PM"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginTop="4dp"/>
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mode:"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginEnd="8dp" />
+            <TextView
+                android:id="@+id/tvPaymentMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credit Card"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
+
+        <!-- Transaction Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date:"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginEnd="8dp" />
+            <TextView
+                android:id="@+id/tvTransactionDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="February 28, 2025 | 13:26 PM"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <!-- Right side: Amount and arrow icon in a horizontal row -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="right|center_vertical">
+        android:gravity="end|center_vertical">
 
         <!-- Amount TextView (e.g., "-Rs. 72") -->
         <TextView
@@ -63,4 +110,5 @@
             android:src="@drawable/arrow_red_up" />
 
     </LinearLayout>
+
 </LinearLayout>

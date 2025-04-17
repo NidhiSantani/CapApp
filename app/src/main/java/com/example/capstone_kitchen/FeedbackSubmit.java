@@ -29,11 +29,14 @@ public class FeedbackSubmit extends AppCompatActivity {
             return insets;
         });
 
+        String sapid = getIntent().getStringExtra("sapid");
+
         Button goHomeButton = findViewById(R.id.goHomeButton);
         goHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FeedbackSubmit.this, HomePage.class);
+                intent.putExtra("sapid", sapid);
                 startActivity(intent);
             }
         });
@@ -61,7 +64,9 @@ public class FeedbackSubmit extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.bottomnav_home) {
-                    startActivity(new Intent(FeedbackSubmit.this, HomePage.class));
+                    Intent intent = new Intent(FeedbackSubmit.this, HomePage.class);
+                    intent.putExtra("sapid", sapid);
+                    startActivity(intent);
                     return true;
                 } else if (itemId == R.id.bottomnav_favorites) {
                     startActivity(new Intent(FeedbackSubmit.this, Favorites.class));

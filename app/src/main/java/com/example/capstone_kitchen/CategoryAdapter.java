@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;  // Import Glide
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -34,7 +35,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category = categoryList.get(position);
         holder.categoryName.setText(category.getName());
-        holder.categoryImage.setImageResource(category.getImageResId());
+
+        // Use Glide to load the image from URL
+        Glide.with(context)
+                .load(category.getImageUrl())  // Load the image from the URL
+                .placeholder(R.drawable.foodph)  // Optional: a placeholder image while loading
+                .into(holder.categoryImage);  // Set the loaded image into the ImageView
 
         // Handle Click Event
         holder.cardView.setOnClickListener(v -> {

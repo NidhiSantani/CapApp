@@ -10,15 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder> {
 
     private List<Filter> filterList;
     private Context context;
+    private OnFilterClickListener onFilterClickListener;
 
-    public FilterAdapter(List<Filter> filterList) {
+    public FilterAdapter(Context context, List<Filter> filterList, OnFilterClickListener onFilterClickListener) {
+        this.context = context;
         this.filterList = filterList;
+        this.onFilterClickListener = onFilterClickListener;
     }
 
     @NonNull
@@ -33,8 +38,26 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Filter filter = filterList.get(position);
         holder.filterName.setText(filter.getName());
-        holder.filterImage.setImageResource(filter.getImageResId());
 
+        String imageUrl = filter.getImageUrl();
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(context)
+                    .load(imageUrl)
+                    .into(holder.filterImage);
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.foodph)
+                    .into(holder.filterImage);
+        }
+
+        // Set the click listener on the filter item
+        holder.itemView.setOnClickListener(v -> {
+            // Notify the activity about the filter click
+            if (onFilterClickListener != null) {
+                onFilterClickListener.onFilterClick(filter.getCuisineId()); // Passing the cuisineId
+            }
+        });
     }
 
     @Override
@@ -51,5 +74,10 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
             filterName = itemView.findViewById(R.id.filter_name);
             filterImage = itemView.findViewById(R.id.filter_image);
         }
+    }
+
+    // Interface to handle filter click event
+    public interface OnFilterClickListener {
+        void onFilterClick(String cuisineId);
     }
 }
