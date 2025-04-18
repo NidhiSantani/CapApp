@@ -1,6 +1,7 @@
 package com.example.capstone_kitchen;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderViewHolder> {
 
@@ -25,7 +30,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @NonNull
     @Override
     public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the CardView layout for each order
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_order_history, parent, false);
         return new OrderViewHolder(view);
@@ -36,69 +40,89 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         OrderHistoryModel order = orderList.get(position);
         Context context = holder.itemView.getContext();
 
-        // 1. Set date/time and status
-        holder.tvOrderDateTime.setText(order.getDate() + " | " + order.getTime());
+        // Set dateTime and status
+        holder.tvOrderDateTime.setText(order.getDateTime());
         holder.tvOrderStatus.setText(order.getStatus());
 
-        // 2. Update status icon based on status
-        if ("Completed".equalsIgnoreCase(order.getStatus())) {
-            holder.imgOrderStatus.setImageResource(R.drawable.ic_check_circle);
-        } else {
+        // Update status icon
+        if ("Cancelled".equalsIgnoreCase(order.getStatus())) {
             holder.imgOrderStatus.setImageResource(R.drawable.ic_close);
+        } else {
+            holder.imgOrderStatus.setImageResource(R.drawable.ic_check_circle);
         }
 
-        // 3. Clear any previous child views in llItemsContainer
+        // Clear old views
         holder.llItemsContainer.removeAllViews();
 
-        // 4. Dynamically create each order item view
-        double total = 0.0;
+        // Add item views
+        final AtomicInteger total = new AtomicInteger(0); // Use AtomicInteger for mutable integer value
+
         if (order.getItems() != null) {
+            // Use a counter to track when all items are processed
+            final int[] processedItems = {0};
+
             for (OrderItemModel item : order.getItems()) {
-                // Create a horizontal LinearLayout for the row
                 LinearLayout itemRow = new LinearLayout(context);
-                LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
+                itemRow.setLayoutParams(new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                itemRow.setLayoutParams(rowParams);
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
                 itemRow.setOrientation(LinearLayout.HORIZONTAL);
                 itemRow.setPadding(0, 8, 0, 8);
 
-                // Create TextView for item details (quantity and name)
-                TextView tvItemName = new TextView(context);
-                LinearLayout.LayoutParams nameParams = new LinearLayout.LayoutParams(
-                        0,
-                        ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-                tvItemName.setLayoutParams(nameParams);
-                tvItemName.setText(item.getQuantity() + " x " + item.getItemName());
-                tvItemName.setTextSize(14);
-                tvItemName.setTextColor(context.getResources().getColor(android.R.color.black));
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("food_item")
+                        .document(item.getFoodId())  // Fetch food item using food_id
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot snapshot = task.getResult();
+                                if (snapshot.exists()) {
+                                    String foodName = snapshot.getString("food_name");
+                                    Log.d("Fetched food item", "Food ID: " + item.getFoodId() + ", Food name: " + foodName);  // Log food_id and food name
 
-                // Create TextView for the price
-                TextView tvItemPrice = new TextView(context);
-                LinearLayout.LayoutParams priceParams = new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                tvItemPrice.setLayoutParams(priceParams);
-                double linePrice = item.getPrice() * item.getQuantity();
-                tvItemPrice.setText("₹" + linePrice);
-                tvItemPrice.setTextSize(14);
-                tvItemPrice.setTextColor(context.getResources().getColor(android.R.color.black));
-                tvItemPrice.setGravity(Gravity.END);
+                                    // Item name
+                                    TextView tvItemName = new TextView(context);
+                                    tvItemName.setLayoutParams(new LinearLayout.LayoutParams(
+                                            0,
+                                            ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+                                    tvItemName.setText(item.getQuantity() + " x " + (foodName != null ? foodName : "Unknown"));
+                                    tvItemName.setTextSize(14);
+                                    tvItemName.setTextColor(context.getResources().getColor(android.R.color.black));
 
-                // Add both TextViews to the horizontal layout
-                itemRow.addView(tvItemName);
-                itemRow.addView(tvItemPrice);
+                                    // Item price
+                                    TextView tvItemPrice = new TextView(context);
+                                    tvItemPrice.setLayoutParams(new LinearLayout.LayoutParams(
+                                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                                            ViewGroup.LayoutParams.WRAP_CONTENT));
+                                    double linePrice = item.getPrice() * item.getQuantity();
+                                    tvItemPrice.setText("₹" + linePrice);
+                                    tvItemPrice.setTextSize(14);
+                                    tvItemPrice.setTextColor(context.getResources().getColor(android.R.color.black));
+                                    tvItemPrice.setGravity(Gravity.END);
 
-                // Add the row to the items container in the CardView
-                holder.llItemsContainer.addView(itemRow);
+                                    itemRow.addView(tvItemName);
+                                    itemRow.addView(tvItemPrice);
+                                    holder.llItemsContainer.addView(itemRow);
 
-                // Accumulate total
-                total += linePrice;
+                                    total.addAndGet((int) linePrice);  // Use addAndGet to modify the total
+                                } else {
+                                    Log.d("Fetched food item", "Document not found for food_id: " + item.getFoodId());  // Document not found
+                                }
+                            } else {
+                                Log.d("Fetched food item", "Error fetching document: " + task.getException());  // Log the error
+                            }
+
+                            // Track when all items are processed
+                            processedItems[0]++;
+
+                            // After processing all items, update the total
+                            if (processedItems[0] == order.getItems().size()) {
+                                holder.tvItemTotal.setText("Item Total: ₹" + total.get());
+                            }
+                        });
+
             }
         }
-
-        // 5. Show the total at the bottom of the card
-        holder.tvItemTotal.setText("Item Total: ₹" + total);
     }
 
     @Override
@@ -106,20 +130,18 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         return orderList.size();
     }
 
-    // ViewHolder class that holds references to our views
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
-
         TextView tvOrderDateTime, tvOrderStatus, tvItemTotal;
         ImageView imgOrderStatus;
         LinearLayout llItemsContainer;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvOrderDateTime   = itemView.findViewById(R.id.tvOrderDateTime);
-            tvOrderStatus     = itemView.findViewById(R.id.tvOrderStatus);
-            tvItemTotal       = itemView.findViewById(R.id.tvItemTotal);
-            imgOrderStatus    = itemView.findViewById(R.id.imgOrderStatus);
-            llItemsContainer  = itemView.findViewById(R.id.llItemsContainer);
+            tvOrderDateTime = itemView.findViewById(R.id.tvOrderDateTime);
+            tvOrderStatus = itemView.findViewById(R.id.tvOrderStatus);
+            tvItemTotal = itemView.findViewById(R.id.tvItemTotal);
+            imgOrderStatus = itemView.findViewById(R.id.imgOrderStatus);
+            llItemsContainer = itemView.findViewById(R.id.llItemsContainer);
         }
     }
 }

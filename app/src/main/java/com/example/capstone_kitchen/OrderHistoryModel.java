@@ -3,25 +3,18 @@ package com.example.capstone_kitchen;
 import java.util.List;
 
 public class OrderHistoryModel {
-    private String date;       // e.g., "February 28, 2025"
-    private String time;       // e.g., "13:26 PM"
-    private String status;     // e.g., "Completed"
+    private String dateTime; // e.g., "April 17, 2025 03:45 PM"
+    private String status;
     private List<OrderItemModel> items;
 
-    public OrderHistoryModel(String date, String time, String status, List<OrderItemModel> items) {
-        this.date = date;
-        this.time = time;
+    public OrderHistoryModel(String dateTime, String status, List<OrderItemModel> items) {
+        this.dateTime = dateTime;
         this.status = status;
         this.items = items;
     }
 
-    // Getters
-    public String getDate() {
-        return date;
-    }
-
-    public String getTime() {
-        return time;
+    public String getDateTime() {
+        return dateTime;
     }
 
     public String getStatus() {
@@ -32,18 +25,13 @@ public class OrderHistoryModel {
         return items;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
-
 
     public void setItems(List<OrderItemModel> items) {
         this.items = items;

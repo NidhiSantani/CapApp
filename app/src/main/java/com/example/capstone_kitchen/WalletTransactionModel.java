@@ -1,36 +1,48 @@
 package com.example.capstone_kitchen;
 
-/**
- * Represents a single wallet transaction, e.g., "Order Placed" or "Wallet top-up".
- */
 public class WalletTransactionModel {
 
-    private String title;       // e.g., "Order Placed" or "Wallet top-up via admin"
-    private String dateTime;    // e.g., "February 28, 2025 | 13:26 PM"
-    private double amount;      // e.g., -72.0 for an order, +300.0 for a top-up
-    private boolean isCredit;   // true if it's a credit (top-up), false if it's a debit (order placed)
+    private String orderId;
+    private String date;
+    private double amount;
+    private String paymentStatus;
 
-    public WalletTransactionModel(String title, String dateTime, double amount, boolean isCredit) {
-        this.title = title;
-        this.dateTime = dateTime;
+    public WalletTransactionModel(String orderId, String date, double amount, String paymentStatus) {
+        this.orderId = orderId;
+        this.date = date;
         this.amount = amount;
-        this.isCredit = isCredit;
+        this.paymentStatus = paymentStatus;
     }
 
-    // Getters and setters (if needed)
-    public String getTitle() {
-        return title;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public double getAmount() {
         return amount;
     }
 
-    public boolean isCredit() {
-        return isCredit;
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

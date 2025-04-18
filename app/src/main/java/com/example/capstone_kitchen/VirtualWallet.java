@@ -29,11 +29,14 @@ public class VirtualWallet extends AppCompatActivity {
             return insets;
         });
 
+        String sapid = getIntent().getStringExtra("sapid");
+
         Button createpinbtn = findViewById(R.id.createPinButton);
         createpinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(VirtualWallet.this, WalletPin.class);
+                intent.putExtra("sapid", sapid);
                 startActivity(intent);
             }
         });

@@ -103,52 +103,53 @@
                             android:textColor="@color/dark_red"/>
                     </LinearLayout>
 
-                    <!-- Quantity Selector -->
-                    <LinearLayout
+                </RelativeLayout>
+
+                <!-- Quantity Selector -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="right"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true">
+
+                    <ImageButton
+                        android:id="@+id/btn_minus1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:backgroundTint="@color/grey"
+                        android:background="@drawable/rounded"
+                        android:padding="5dp"
+                        app:tint="@color/black"
+                        android:contentDescription="Remove item"
+                        android:src="@drawable/minus_sign"/>
+
+                    <TextView
+                        android:id="@+id/item_quantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true">
+                        android:text="1"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-black"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="8dp"/>
 
-                        <ImageButton
-                            android:id="@+id/btn_minus1"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:scaleType="fitCenter"
-                            android:backgroundTint="@color/grey"
-                            android:background="@drawable/rounded"
-                            android:padding="5dp"
-                            app:tint="@color/black"
-                            android:contentDescription="Remove item"
-                            android:src="@drawable/minus_sign"/>
+                    <ImageButton
+                        android:id="@+id/btn_plus1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:backgroundTint="@color/dark_red"
+                        android:background="@drawable/rounded"
+                        android:padding="5dp"
+                        app:tint="@color/white"
+                        android:contentDescription="Add item"
+                        android:src="@drawable/plus_sign"/>
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/item_quantity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1"
-                            android:textSize="16dp"
-                            android:textStyle="bold"
-                            android:fontFamily="sans-serif-black"
-                            android:textColor="@color/black"
-                            android:layout_marginHorizontal="8dp"/>
-
-                        <ImageButton
-                            android:id="@+id/btn_plus1"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:scaleType="fitCenter"
-                            android:backgroundTint="@color/dark_red"
-                            android:background="@drawable/rounded"
-                            android:padding="5dp"
-                            app:tint="@color/white"
-                            android:contentDescription="Add item"
-                            android:src="@drawable/plus_sign"/>
-                    </LinearLayout>
-
-                </RelativeLayout>
             </LinearLayout>
 
         </LinearLayout>

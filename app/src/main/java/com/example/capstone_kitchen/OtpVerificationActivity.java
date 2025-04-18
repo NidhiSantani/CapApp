@@ -7,99 +7,110 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.*;
 
 public class OtpVerificationActivity extends AppCompatActivity {
 
     private ImageView ivBack;
     private TextView tvResendInfo;
     private Button btnVerify;
-    private EditText etOtp1, etOtp2, etOtp3, etOtp4;
+    private EditText etOtp1, etOtp2, etOtp3, etOtp4, etOtp5, etOtp6;
     private CountDownTimer countDownTimer;
     private static final long OTP_TIMEOUT = 30000; // 30 seconds
+
+    private String verificationId, phone, sapid;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp_verification);
 
-        // 2. Toolbar views
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        // Get data from SignupPage
+        verificationId = getIntent().getStringExtra("verificationId");
+        phone = getIntent().getStringExtra("phone");
+        sapid = getIntent().getStringExtra("sapid");
+
         ivBack = findViewById(R.id.backButton);
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OtpVerificationActivity.this, SignupPage.class);
-                startActivity(intent);
-            }
+        ivBack.setOnClickListener(v -> {
+            Intent intent = new Intent(OtpVerificationActivity.this, SignupPage.class);
+            startActivity(intent);
+            finish();
         });
 
-        // 3. OTP fields
         etOtp1 = findViewById(R.id.etOtp1);
         etOtp2 = findViewById(R.id.etOtp2);
         etOtp3 = findViewById(R.id.etOtp3);
         etOtp4 = findViewById(R.id.etOtp4);
+        etOtp5 = findViewById(R.id.etOtp5);
+        etOtp6 = findViewById(R.id.etOtp6);
 
-        // Add watchers for each OTP field to move focus automatically
+        // Set up OTP fields
         setupOtpField(etOtp1, etOtp2);
         setupOtpField(etOtp2, etOtp3);
         setupOtpField(etOtp3, etOtp4);
-        // For the last field, you might verify automatically or wait for the user to press the button
+        setupOtpField(etOtp4, etOtp5);
+        setupOtpField(etOtp5, etOtp6);
 
-        // 4. Resend info (countdown)
         tvResendInfo = findViewById(R.id.tvResendInfo);
         startOtpCountdown();
 
-        // 5. Verify button
         btnVerify = findViewById(R.id.btnVerify);
         btnVerify.setOnClickListener(v -> {
-            // Gather OTP
             String otp = etOtp1.getText().toString().trim()
                     + etOtp2.getText().toString().trim()
                     + etOtp3.getText().toString().trim()
-                    + etOtp4.getText().toString().trim();
+                    + etOtp4.getText().toString().trim()
+                    + etOtp5.getText().toString().trim()
+                    + etOtp6.getText().toString().trim();
 
-            if (otp.length() == 4) {
-                // TODO: Verify OTP with your backend or logic
-                Toast.makeText(OtpVerificationActivity.this, "OTP Verified: " + otp, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(OtpVerificationActivity.this, CreatePasswordActivity.class); // Change to your next screen
-                startActivity(intent);
-                finish(); // Finish OTP screen after success
+            if (otp.length() == 6 && verificationId != null) {
+                verifyOtp(otp);
             } else {
-                Toast.makeText(OtpVerificationActivity.this, "Please enter all 4 digits", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter all 6 digits", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Optionally, if you want to handle a "resend" click after the timer ends:
         tvResendInfo.setOnClickListener(v -> {
-            if (tvResendInfo.getText().toString().startsWith("Didn’t receive")) {
-                // Timer hasn't ended yet, do nothing
-            } else {
-                // Resend OTP logic
-                resendOtp();
-            }
+            if (!tvResendInfo.isEnabled()) return;
+            resendOtp(); // logic to resend
         });
     }
 
-    /**
-     * Moves focus to the next EditText when a single digit is entered.
-     */
+    private void verifyOtp(String otp) {
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "OTP Verified Successfully!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, CreatePasswordActivity.class);
+                        intent.putExtra("sapid", sapid);
+                        intent.putExtra("phone", phone);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Invalid OTP. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     private void setupOtpField(EditText current, EditText next) {
         current.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 1) {
-                    next.requestFocus();
-                }
+                if (s.length() == 1) next.requestFocus();
             }
-            @Override public void beforeTextChanged(CharSequence c, int i, int i1, int i2) {}
-            @Override public void onTextChanged(CharSequence c, int i, int i1, int i2) {}
+
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
     }
 
-    /**
-     * Starts a 30-second countdown for "Retry in X seconds".
-     */
     private void startOtpCountdown() {
         tvResendInfo.setText("Didn’t receive the code? Retry in 30 seconds");
         tvResendInfo.setEnabled(false);
@@ -119,28 +130,46 @@ public class OtpVerificationActivity extends AppCompatActivity {
         }.start();
     }
 
-    /**
-     * Simulates the resend OTP logic, e.g., request a new code from the server.
-     * Resets the countdown.
-     */
     private void resendOtp() {
-        Toast.makeText(this, "Resending OTP...", Toast.LENGTH_SHORT).show();
-        // Clear OTP fields
-        etOtp1.setText("");
-        etOtp2.setText("");
-        etOtp3.setText("");
-        etOtp4.setText("");
-        etOtp1.requestFocus();
+        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(firebaseAuth)
+                .setPhoneNumber(phone)       // phone must include +91 prefix
+                .setTimeout(30L, java.util.concurrent.TimeUnit.SECONDS)
+                .setActivity(this)
+                .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                    @Override
+                    public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
+                        // Optional: auto verification
+                    }
 
-        // Restart the countdown
-        startOtpCountdown();
+                    @Override
+                    public void onVerificationFailed(@NonNull FirebaseException e) {
+                        Toast.makeText(OtpVerificationActivity.this, "Resend failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onCodeSent(@NonNull String newVerificationId,
+                                           @NonNull PhoneAuthProvider.ForceResendingToken token) {
+                        Toast.makeText(OtpVerificationActivity.this, "OTP resent successfully", Toast.LENGTH_SHORT).show();
+                        verificationId = newVerificationId;
+
+                        // Clear old inputs
+                        etOtp1.setText(""); etOtp2.setText("");
+                        etOtp3.setText(""); etOtp4.setText("");
+                        etOtp5.setText(""); etOtp6.setText("");
+                        etOtp1.requestFocus();
+
+                        // Restart timer
+                        startOtpCountdown();
+                    }
+                })
+                .build();
+
+        PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+        if (countDownTimer != null) countDownTimer.cancel();
     }
 }

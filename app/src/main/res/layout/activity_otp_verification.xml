@@ -81,7 +81,7 @@
                 android:id="@+id/tvOtpSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="A 4 digit code has been sent to your mobile number +91 12345 67890"
+                android:text="A 6 digit code has been sent to your mobile number"
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="center"
@@ -89,7 +89,7 @@
                 android:layout_marginBottom="16dp"
                 android:textAlignment="center" />
 
-            <!-- OTP Input Fields (4 boxes) -->
+            <!-- OTP Input Fields (6 boxes) -->
             <LinearLayout
                 android:id="@+id/layoutOtpFields"
                 android:layout_width="wrap_content"
@@ -140,7 +140,30 @@
                     android:maxLength="1"
                     android:textSize="18sp"
                     android:background="@drawable/otp_box_bg" />
+
+                <EditText
+                    android:id="@+id/etOtp5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="18sp"
+                    android:background="@drawable/otp_box_bg" />
+
+                <EditText
+                    android:id="@+id/etOtp6"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="18sp"
+                    android:background="@drawable/otp_box_bg" />
             </LinearLayout>
+
 
             <!-- "Didn't receive code?" and countdown -->
             <TextView
@@ -166,4 +189,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

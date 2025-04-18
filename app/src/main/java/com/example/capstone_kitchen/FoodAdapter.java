@@ -5,18 +5,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     private List<FoodMenu> foodList;
+    private String sapid;
+    private List<String> userFavorites;
+    private OrderModel orderModel;
+    private FirebaseFirestore db;
 
-    public FoodAdapter(List<FoodMenu> foodList) {
+    public FoodAdapter(List<FoodMenu> foodList, String sapid, List<String> userFavorites, OrderModel orderModel) {
         this.foodList = foodList;
+        this.sapid = sapid;
+        this.userFavorites = userFavorites;
+        this.orderModel = orderModel;
+        this.db = FirebaseFirestore.getInstance();
     }
 
     @NonNull
@@ -30,40 +43,99 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodMenu food = foodList.get(position);
-        holder.foodName.setText(food.getName());
+        String foodId = food.getFoodId();
+
+        // Set food name, description, price, and time
+        holder.foodName.setText(food.getFoodName());
         holder.foodDescription.setText(food.getDescription());
-        holder.foodPrice.setText("₹ " + food.getPrice());
-        holder.foodTime.setText(food.getTime());
-        holder.foodImage.setImageResource(food.getImageResId());
+        holder.foodPrice.setText("₹ " + String.format("%.2f", food.getRate()));
+        holder.foodTime.setText(food.getMakeTime() + " mins");
 
-        // Toggle heart icon
+        Glide.with(holder.foodImage.getContext())
+                .load(food.getImage())
+                .placeholder(R.drawable.foodph)
+                .into(holder.foodImage);
+
+        // Availability
+        boolean isAvailable = food.getAvailabilityStatus();
+        holder.itemView.setAlpha(isAvailable ? 1.0f : 0.5f);
+        holder.itemView.setEnabled(isAvailable);
+        holder.favIcon.setEnabled(isAvailable);
+        holder.btnPlus.setEnabled(isAvailable);
+        holder.btnMinus.setEnabled(isAvailable);
+
+        // Quantity from Firestore (orderModel)
+        orderModel.getItemQuantity(foodId, quantity -> holder.quantityText.setText(String.valueOf(quantity)));
+
+        // Set favorite icon based on userFavorites
+        boolean isFavorite = userFavorites.contains(foodId);
+        holder.favIcon.setImageResource(isFavorite ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
+        holder.favIcon.setTag(isFavorite);
+
         holder.favIcon.setOnClickListener(v -> {
-            boolean isFavorite = (holder.favIcon.getTag() != null && (boolean) holder.favIcon.getTag());
-            if (isFavorite) {
-                holder.favIcon.setImageResource(R.drawable.ic_heart_outline);
+            boolean currentStatus = (boolean) holder.favIcon.getTag();
+
+            // Limit to 4 favorites
+            if (!currentStatus && userFavorites.size() >= 4) {
+                Toast.makeText(v.getContext(), "You can only have 4 favorites !!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            holder.favIcon.setEnabled(false); // Prevent rapid taps
+
+            if (currentStatus) {
+                // Remove from favorites
+                db.collection("user").document(sapid)
+                        .update("favorites", FieldValue.arrayRemove(foodId))
+                        .addOnSuccessListener(unused -> {
+                            userFavorites.remove(foodId);
+                            holder.favIcon.setImageResource(R.drawable.ic_heart_outline);
+                            holder.favIcon.setTag(false);
+                            holder.favIcon.setEnabled(true);
+                        });
             } else {
-                holder.favIcon.setImageResource(R.drawable.ic_heart_filled);
+                // Add to favorites
+                db.collection("user").document(sapid)
+                        .update("favorites", FieldValue.arrayUnion(foodId))
+                        .addOnSuccessListener(unused -> {
+                            userFavorites.add(foodId);
+                            holder.favIcon.setImageResource(R.drawable.ic_heart_filled);
+                            holder.favIcon.setTag(true);
+                            holder.favIcon.setEnabled(true);
+                        });
             }
-            holder.favIcon.setTag(!isFavorite);
         });
 
-        // Quantity adjustment
+        // Quantity + button
         holder.btnPlus.setOnClickListener(v -> {
-            int quantity = Integer.parseInt(holder.quantityText.getText().toString());
-            holder.quantityText.setText(String.valueOf(++quantity));
+            orderModel.getItemQuantity(foodId, quantity -> {
+                int newQuantity = quantity + 1;
+                holder.quantityText.setText(String.valueOf(newQuantity));
+                orderModel.addFoodToOrder(foodId, 1, food.getRate(), food.getMakeTime());
+            });
         });
 
+        // Quantity - button
         holder.btnMinus.setOnClickListener(v -> {
-            int quantity = Integer.parseInt(holder.quantityText.getText().toString());
-            if (quantity > 0) {
-                holder.quantityText.setText(String.valueOf(--quantity));
-            }
+            orderModel.getItemQuantity(foodId, quantity -> {
+                if (quantity > 0) {
+                    int newQuantity = quantity - 1;
+                    holder.quantityText.setText(String.valueOf(newQuantity));
+                    orderModel.updateOrderItemQuantity(foodId, newQuantity);
+                }
+            });
         });
     }
 
     @Override
     public int getItemCount() {
         return foodList.size();
+    }
+
+    // 🔧 ✅ New method to update favorites
+    public void updateFavorites(List<String> newFavorites) {
+        this.userFavorites = newFavorites;
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

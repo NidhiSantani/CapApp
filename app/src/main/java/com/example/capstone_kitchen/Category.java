@@ -1,19 +1,26 @@
 package com.example.capstone_kitchen;
 
+// Category model to hold name and image URL
 public class Category {
     private String name;
-    private int imageResId;
+    private String imageUrl;
+    private String cuisineId;
 
-    public Category(String name, int imageResId) {
+    public Category(String name, String imageUrl, String cuisineId) {
         this.name = name;
-        this.imageResId = imageResId;
+        this.imageUrl = imageUrl;
+        this.cuisineId = cuisineId;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getCuisineId() {
+        return cuisineId;
     }
 }

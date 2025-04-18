@@ -48,6 +48,32 @@
 
         <!-- Estimated Time (Label) -->
         <TextView
+            android:id="@+id/quantitylabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity:"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_toEndOf="@id/itemImage"
+            android:layout_below="@id/itemName"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Estimated Time (Value) -->
+        <TextView
+            android:id="@+id/quantityvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_toEndOf="@id/quantitylabel"
+            android:layout_alignBaseline="@id/quantitylabel"
+            android:layout_marginStart="4dp"/>
+
+        <!-- Estimated Time (Label) -->
+        <TextView
             android:id="@+id/itemEstTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +81,7 @@
             android:textSize="14sp"
             android:textColor="@color/black"
             android:layout_toEndOf="@id/itemImage"
-            android:layout_below="@id/itemName"
+            android:layout_below="@id/quantitylabel"
             android:layout_marginStart="12dp"
             android:layout_marginTop="4dp"/>
 
@@ -97,129 +123,6 @@
             android:layout_toEndOf="@id/itemCounterNoLabel"
             android:layout_alignBaseline="@id/itemCounterNoLabel"
             android:layout_marginStart="4dp"/>
-
-        <!-- Status Progress Bar with Labels -->
-        <LinearLayout
-            android:id="@+id/progressBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/itemName"
-            android:layout_marginTop="70dp"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <!-- Step Indicators -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/status1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_gray"
-                        android:text="1"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/statusLabel1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Order Placed"
-                        android:textSize="12dp"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="3dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@color/grey"
-                    android:layout_gravity="center"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/status2"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_gray"
-                        android:text="2"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/statusLabel2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Preparing"
-                        android:textSize="12dp"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="3dp"
-                    android:background="@color/grey"
-                    android:layout_marginBottom="15dp"
-                    android:layout_gravity="center"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/status3"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_gray"
-                        android:text="3"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/statusLabel3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ready"
-                        android:textSize="12dp"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

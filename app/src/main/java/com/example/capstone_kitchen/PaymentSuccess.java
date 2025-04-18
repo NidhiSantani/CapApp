@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -27,6 +28,10 @@ public class PaymentSuccess extends AppCompatActivity {
     private static final int ANIMATION_DURATION = 2000; // 2 seconds
     private static final int AUTO_NAVIGATION_DELAY = 6000; // 6 seconds
 
+    private String sapid, orderId;
+    private double totalAmount;
+    private TextView tvPaymentamt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,64 +43,69 @@ public class PaymentSuccess extends AppCompatActivity {
             return insets;
         });
 
+        // Fetch values from Intent
+        Intent intent = getIntent();
+        sapid = intent.getStringExtra("sapid");
+        orderId = intent.getStringExtra("orderId");
+        totalAmount = intent.getDoubleExtra("totalAmount", 0.0);
+
+        // Reference the TextView
+        tvPaymentamt = findViewById(R.id.tvPaymentamt);
+
+        // Set the totalAmount to the TextView
+        tvPaymentamt.setText("₹ " + String.format("%.2f", totalAmount));
+
         // Reference the tick ImageView
         imgPaySuccess = findViewById(R.id.imgPaySuccess);
 
         // Start circular reveal animation immediately
-        imgPaySuccess.post(() -> startCircularRevealAnimation());
+        imgPaySuccess.post(this::startCircularRevealAnimation);
 
         // Play success sound
         playSuccessSound();
 
         // Automatically move to the next activity after 6 seconds
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(PaymentSuccess.this, Invoice.class);
-            startActivity(intent);
+            Intent nextIntent = new Intent(PaymentSuccess.this, Invoice.class);
+            nextIntent.putExtra("sapid", sapid);
+            nextIntent.putExtra("orderId", orderId);
+            nextIntent.putExtra("totalAmount", totalAmount);
+            startActivity(nextIntent);
             finish();
         }, AUTO_NAVIGATION_DELAY);
 
         ImageButton backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(PaymentSuccess.this, Cart.class));
-            }
-        });
+        backButton.setOnClickListener(v -> startActivity(new Intent(PaymentSuccess.this, Cart.class)));
 
         // Bottom Navigation Bar Functionality
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
 
-                if (itemId == R.id.bottomnav_home) {
-                    startActivity(new Intent(PaymentSuccess.this, HomePage.class));
-                    return true;
-                } else if (itemId == R.id.bottomnav_favorites) {
-                    startActivity(new Intent(PaymentSuccess.this, Favorites.class));
-                    return true;
-                } else if (itemId == R.id.bottomnav_wallet) {
-                    startActivity(new Intent(PaymentSuccess.this, VirtualWallet.class));
-                    return true;
-                } else if (itemId == R.id.bottomnav_cart) {
-                    startActivity(new Intent(PaymentSuccess.this, Cart.class));
-                    return true;
-                }
-
-                return false;
+            if (itemId == R.id.bottomnav_home) {
+                startActivity(new Intent(PaymentSuccess.this, HomePage.class));
+                return true;
+            } else if (itemId == R.id.bottomnav_favorites) {
+                startActivity(new Intent(PaymentSuccess.this, Favorites.class));
+                return true;
+            } else if (itemId == R.id.bottomnav_wallet) {
+                startActivity(new Intent(PaymentSuccess.this, VirtualWallet.class));
+                return true;
+            } else if (itemId == R.id.bottomnav_cart) {
+                startActivity(new Intent(PaymentSuccess.this, Cart.class));
+                return true;
             }
+
+            return false;
         });
     }
 
     private void startCircularRevealAnimation() {
-        // Get center of the image for circular effect
         int cx = imgPaySuccess.getWidth() / 2;
         int cy = imgPaySuccess.getHeight() / 2;
         float finalRadius = (float) Math.hypot(cx, cy);
 
-        // Create circular reveal animation
         Animator circularReveal = ViewAnimationUtils.createCircularReveal(imgPaySuccess, cx, cy, 0, finalRadius);
         circularReveal.setDuration(ANIMATION_DURATION);
         imgPaySuccess.setVisibility(View.VISIBLE);

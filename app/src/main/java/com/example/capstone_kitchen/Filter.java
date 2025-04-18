@@ -2,21 +2,24 @@ package com.example.capstone_kitchen;
 
 public class Filter {
     private String name;
-    private int imageResId;
+    private String imageUrl;
     private boolean isSelected;
+    private String cuisineId; // Add this field
 
-    public Filter(String name, int imageResId, boolean isSelected) {
+    // Modify the constructor to accept cuisineId
+    public Filter(String name, String imageUrl, boolean isSelected, String cuisineId) {
         this.name = name;
-        this.imageResId = imageResId;
+        this.imageUrl = imageUrl;
         this.isSelected = isSelected;
+        this.cuisineId = cuisineId;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public boolean isSelected() {
@@ -27,8 +30,12 @@ public class Filter {
         isSelected = selected;
     }
 
-    // ✅ Add toggle method for cleaner state updates
     public void toggleSelected() {
         this.isSelected = !this.isSelected;
+    }
+
+    // Getter for cuisineId
+    public String getCuisineId() {
+        return cuisineId;
     }
 }

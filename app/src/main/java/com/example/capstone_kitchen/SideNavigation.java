@@ -31,6 +31,9 @@ public class SideNavigation extends AppCompatActivity {
             return insets;
         });
 
+        // Retrieve the SAP ID passed from HomePage
+        String sapid = getIntent().getStringExtra("sapid");
+
         ImageButton menuButton = findViewById(R.id.menuButton);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +75,23 @@ public class SideNavigation extends AppCompatActivity {
 
         feedback.setOnClickListener(v -> {
             Intent intent = new Intent(SideNavigation.this, Feedback.class);
+            intent.putExtra("sapid", sapid);
             startActivity(intent);
         });
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Get the SAP ID from the current activity (SideNavigation)
+                String sapid = getIntent().getStringExtra("sapid");
+
+                // Create an Intent to start ProfileActivity
                 Intent intent = new Intent(SideNavigation.this, ProfileActivity.class);
+
+                // Put the SAP ID into the Intent to pass it to ProfileActivity
+                intent.putExtra("sapid", sapid);
+
+                // Start ProfileActivity
                 startActivity(intent);
             }
         });
@@ -87,6 +100,7 @@ public class SideNavigation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SideNavigation.this, OrderHistoryActivity.class);
+                intent.putExtra("sapid", sapid);
                 startActivity(intent);
             }
         });
@@ -95,6 +109,7 @@ public class SideNavigation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SideNavigation.this, WalletHistoryActivity.class);
+                intent.putExtra("sapid", sapid);
                 startActivity(intent);
             }
         });
