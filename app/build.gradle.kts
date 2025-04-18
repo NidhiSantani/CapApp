@@ -60,4 +60,11 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
 
+    implementation ("org.apache.poi:poi:3.17")
+    implementation("org.apache.poi:poi-ooxml:3.17") {
+        exclude(group = "org.apache.xmlbeans", module = "xmlbeans")
+    }
+
+    implementation ("com.google.code.gson:gson:2.8.8")
+
 }
