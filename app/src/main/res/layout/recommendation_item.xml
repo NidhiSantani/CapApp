@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- layout/recommendation_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="210dp"
+    android:orientation="vertical"
+    android:elevation="10dp"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/rec_food_image"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:src="@drawable/foodph"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/rec_food_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:paddingTop="4dp" />
+
+    <TextView
+        android:id="@+id/rec_food_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="₹0.00"
+        android:textSize="12sp"
+        android:textColor="@android:color/darker_gray" />
+</LinearLayout>
